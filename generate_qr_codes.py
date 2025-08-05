@@ -100,7 +100,7 @@ def main():
    except Exception as e: # Catch any other exceptions
       print(f"{BackgroundColors.RED}ERROR: An unexpected error occurred: {str(e)}{Style.RESET_ALL}")
 
-   print(f"{BackgroundColors.BOLD}{BackgroundColors.CYAN}QR Code Generation{BackgroundColors.GREEN} program completed!{Style.RESET_ALL}", end="\n\n") # Output completion message
+   print(f"\n{BackgroundColors.BOLD}{BackgroundColors.CYAN}QR Code Generation{BackgroundColors.GREEN} program completed!{Style.RESET_ALL}", end="\n\n") # Output completion message
 
 
 if __name__ == "__main__":
