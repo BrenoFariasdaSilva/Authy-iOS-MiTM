@@ -60,7 +60,9 @@ In a short way, you install mitmproxy, set manually the proxy on your iOS device
 
 ---
 
-## Step 1: Setting up mitmproxy
+## Setup
+
+### Step 1: Setting up mitmproxy
 Extracting tokens works by capturing HTTPS traffic received by the Authy app after logging in. This traffic contains your tokens in encrypted form, which is then decrypted in a later step so that you can access your authenticator seeds. In order to receive this traffic, we use mitmproxy, which is an easy-to-use tool that allows you to intercept traffic from apps and websites on your device.
 
 To begin, install [mitmproxy](https://www.mitmproxy.org) on your computer, then run `mitmweb --allow-hosts "api.authy.com"` in your terminal to launch mitmweb (which is a user-friendly interface for mitmproxy) with HTTPS proxying on for "api.authy.com". Once proxying has started, connect your iOS device to the proxy by going to Settings -> Wi-Fi -> (your network) -> Configure Proxy, set it to "Manual", then enter your computer's private IP for "Server" and 8080 for "Port".
@@ -72,7 +74,7 @@ Once your iOS device is connected to the proxy, you'll need to install the mitmp
 
 At this point, you have completed the process of setting up mitmproxy to capture HTTPS traffic from your iOS device. Keep the proxy connected for the next step, which is dumping tokens received from the Authy iOS app.
 
-## Step 2: Dumping tokens
+### Step 2: Dumping tokens
 > [!NOTE]
 > In order for this to work, you must have your Authy tokens synced to the cloud and you must have a backup password set. It is recommended to dump tokens with a secondary device in case something goes wrong.
 
@@ -90,7 +92,7 @@ At this point, mitmproxy should have logged your authenticator tokens in encrypt
 
 Obviously, yours will show real information about every token you have in your Authy account. Once you find this request, switch to the "Flow" tab in mitmweb, then hit "Download" to download this data into a file called "authenticator_tokens". Rename this file to "authenticator_tokens.json" and disconnect your device from the proxy (select "Off" in Settings -> Wi-Fi -> (your network) -> Configure Proxy) before exiting out of the proxy on your computer (hit Ctrl+C on the terminal window running mitmweb) and continuing to the next step.
 
-## Step 3: Decrypting tokens
+### Step 3: Decrypting tokens
 You now have an authenticator_tokens.json file with your tokens in it, but it's encrypted and can't be used. Luckily, this file can be decrypted with your backup password and a Python script. Download the "decrypt.py" file in this repo, make sure your authenticator_tokens.json file is in the same folder as decrypt.py, and then run the Python script with `python3 decrypt.py`.
 
 > [!NOTE]
