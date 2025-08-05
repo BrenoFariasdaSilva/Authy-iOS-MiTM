@@ -92,16 +92,17 @@ At this point, mitmproxy should have logged your authenticator tokens in encrypt
 
 Obviously, yours will show real information about every token you have in your Authy account. Once you find this request, switch to the "Flow" tab in mitmweb, then hit "Download" to download this data into a file called "authenticator_tokens". Rename this file to "authenticator_tokens.json" and disconnect your device from the proxy (select "Off" in Settings -> Wi-Fi -> (your network) -> Configure Proxy) before exiting out of the proxy on your computer (hit Ctrl+C on the terminal window running mitmweb) and continuing to the next step.
 
-### Step 3: Decrypting tokens
-You now have an authenticator_tokens.json file with your tokens in it, but it's encrypted and can't be used. Luckily, this file can be decrypted with your backup password and a Python script. Download the "decrypt.py" file in this repo, make sure your authenticator_tokens.json file is in the same folder as decrypt.py, and then run the Python script with `python3 decrypt.py`.
+### Step 3: Setting Up Requirements
+Before decrypting your tokens, you need install all of the other requirements. 
+First, you must ensure you have [Python 3.13.1+](https://www.python.org) installed on your computer. After that, verify that you have `Make` installed on your computer (it comes pre-installed on Linux and Mac, but Windows users can install it via [Chocolatey](https://chocolatey.org/install) with `choco install make`), then run `make dependencies` to set up a Python virtual environment and install the required dependencies. If you don't have `Make` installed, you can manually set up a Python virtual environment and install the dependencies by following these steps:
+1. Open your terminal and navigate to the repository folder.
+2. Create a virtual environment by running `python -m venv venv` (or `python3 -m venv venv` depending on your system).
+3. Activate the virtual environment:
+	- On Windows, run `venv\Scripts\activate`
+	- On Mac/Linux, run `source venv/bin/activate`
+4. Install the required dependencies by running `pip install -r requirements.txt`
 
-> [!NOTE]
-> If you get an error that python3 couldn't be found, install Python on your computer from [python.org](https://www.python.org). If you get an error that the "cryptography" package couldn't be found, install it with `pip3 install cryptography`.
-
-The script will prompt you for your backup password, which does not show in the terminal for privacy reasons. After entering your password and hitting Enter, you should have a decrypted_tokens.json file, which contains the decrypted authenticator seeds from your Authy account. Please note that this JSON file is not in a standard format that you can import to other authenticator apps, however some people have made scripts to convert the decrypted_tokens.json file into a format recognizable by other authenticator apps. I'll leave a link to some of these below.
-
-> [!NOTE]
-> If you see "Decryption failed: Invalid padding length" as the decrypted_seed in your JSON file, you entered an incorrect backup password. Run the script again with the correct backup password.
+After that, inside the repository folder, copy the `.env-example` file to a new file named `.env` and open it in a text editor. Replace `YOUR_AUTHY_BACKUP_PASSWORD_HERE` with your actual Authy backup password, then save and close the file.
 
 ---
 
