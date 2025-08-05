@@ -110,3 +110,7 @@ This method will never work on unrooted Android devices due to the fact that the
 You can find some more information on the comments of this GitHub Gist: [https://gist.github.com/gboudreau/94bb0c11a6209c82418d01a59d958c93](https://gist.github.com/gboudreau/94bb0c11a6209c82418d01a59d958c93).
 
 If something goes wrong while following this guide, please file a GitHub issue and I will look into it.
+
+## License
+### MIT License
+This project is licensed under the [MIT License](LICENSE).
