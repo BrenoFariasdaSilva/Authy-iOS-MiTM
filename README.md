@@ -51,11 +51,14 @@ In a short way, you install mitmproxy, set manually the proxy on your iOS device
 ---
 
 ## Requirements
--A computer (Windows/Mac/Linux)
+- A computer (Windows/Mac/Linux)
+- An iOS/iPadOS device (using a secondary device is recommended)
+- A basic understanding of the command line and running Python scripts
+- [mitmproxy](https://www.mitmproxy.org) installed on your computer
+- [Python 3.13.1+](https://www.python.org) installed on your computer
+- [Make](https://www.gnu.org/software/make/) installed on your computer (optional, but strongly recommended to simplify setup and usage)
 
--An iOS/iPadOS device (using a secondary device is recommended)
-
--A basic understanding of the command line and running Python scripts
+---
 
 ## Step 1: Setting up mitmproxy
 Extracting tokens works by capturing HTTPS traffic received by the Authy app after logging in. This traffic contains your tokens in encrypted form, which is then decrypted in a later step so that you can access your authenticator seeds. In order to receive this traffic, we use mitmproxy, which is an easy-to-use tool that allows you to intercept traffic from apps and websites on your device.
