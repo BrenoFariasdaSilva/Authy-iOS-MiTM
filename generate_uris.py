@@ -153,23 +153,25 @@ def custom_sort(items):
          j -= 1 # Decrement j to continue checking previous items
 
 
-def save_uris_to_json(uri_data, output_filename):
+def save_uris_to_json(app_choice, uri_data, output_filename):
    """
    Saves the generated URIs to a JSON file.
 
+   :param app_choice: Selected authenticator app
    :param uri_data: Dictionary containing URIs and their names
    :param output_filename: Output file name without extension
    """
 
    with open(f"{output_filename}.json", "w") as uri_file: # Open the output file in write mode
       json.dump(uri_data, uri_file, indent=4) # Write the URIs data to the file with indentation for readability
-      print(f"{BackgroundColors.GREEN}URIs saved to {BackgroundColors.CYAN}{output_filename}.json{Style.RESET_ALL}")
+      print(f"\n{BackgroundColors.GREEN}URIs in the format for {BackgroundColors.CYAN}{app_choice} App{BackgroundColors.GREEN} saved to {BackgroundColors.CYAN}{output_filename}.json{Style.RESET_ALL}") # Output success message
 
 
-def save_uris_to_txt(uri_data, output_filename):
+def save_uris_to_txt(app_choice, uri_data, output_filename):
    """
    Saves the generated URIs to a TXT file.
 
+   :param app_choice: Selected authenticator app
    :param uri_data: Dictionary containing URIs and their names
    :param output_filename: Output file name without extension
    """
@@ -177,7 +179,7 @@ def save_uris_to_txt(uri_data, output_filename):
    with open(f"{output_filename}.txt", "w") as uri_txt_file: # Open the output TXT file in write mode
       for item in uri_data["URIs"]: # Loop through each URI item
          uri_txt_file.write(f"{item['uri']}\n") # Write the URI to the file
-      print(f"{BackgroundColors.GREEN}URIs saved to {BackgroundColors.CYAN}{output_filename}.txt{Style.RESET_ALL}")
+      print(f"{BackgroundColors.GREEN}URIs in the format for {BackgroundColors.CYAN}{app_choice} App{BackgroundColors.GREEN} saved to {BackgroundColors.CYAN}{output_filename}.txt{Style.RESET_ALL}", end="\n\n") # Output success message
 
 
 def handle_uri_generation(json_data, app_choice, output_filename):
@@ -202,8 +204,8 @@ def handle_uri_generation(json_data, app_choice, output_filename):
    uri_data = {"URIs": [{"name": extract_uri_name(uri), "uri": uri} for uri in uris]} # Create a dictionary with URIs and their names
    custom_sort(uri_data["URIs"]) # Sort the URIs based on their names
 
-   save_uris_to_json(uri_data, output_filename) # Save the URIs to a JSON file
-   save_uris_to_txt(uri_data, output_filename) # Save the URIs to a TXT file
+   save_uris_to_json(app_choice, uri_data, output_filename) # Save the URIs to a JSON file
+   save_uris_to_txt(app_choice, uri_data, output_filename) # Save the URIs to a TXT file
 
 
 def main():
