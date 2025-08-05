@@ -111,6 +111,12 @@ You can find some more information on the comments of this GitHub Gist: [https:/
 
 If something goes wrong while following this guide, please file a GitHub issue and I will look into it.
 
+## Contributing
+
+The guide for contributing is in the [CONTRIBUTING.md](CONTRIBUTING.md) file. If you have any suggestions or improvements, feel free to open an issue or a pull request.
+
+---
+
 ## License
 ### MIT License
 This project is licensed under the [MIT License](LICENSE).
