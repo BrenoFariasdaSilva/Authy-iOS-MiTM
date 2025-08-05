@@ -42,6 +42,14 @@ It took a lot of work to make this fork, so I hope you enjoy it and find it usef
 	- [Compatibility note](#compatibility-note)
 	- [Other info](#other-info)
 
+## Introduction
+
+This repository provides a guide and scripts to extract authenticator tokens from the Authy iOS app using **mitmproxy** (Man-in-the-Middle proxy). Authy is a popular two-factor authentication (2FA) app that provides an additional layer of security for your online accounts. However, it does not provide a built-in way to export or backup your tokens. Also, since the Authy Desktop App was discontinued, exporting tokens from the Authy Desktop App is no longer an option.  
+So, by using mitmproxy, it enables you to capture HTTPS traffic, extract encrypted tokens, and decrypt them to obtain authenticator seeds.
+In a short way, you install mitmproxy, set manually the proxy on your iOS device to be the mitmproxy installed on your computer, so, when you log-out and log back in, as your computer is the proxy for your iOS device, it will capture the HTTPS traffic from the Authy app, which contains your authenticator tokens file (`authenticator_tokens.json`) in encrypted form. After that, you can decrypt the tokens using a Python script and your backup password, which will give you access to your authenticator Time-based One-Time Password (TOTP) Uniform Resource Identifier (URI) for many Authenticator apps, such as 2FA, Aegis, Google Authenticator, and Microsoft Authenticator. With those URI, you can import your tokens into any of those apps, or scan the generated QR codes for them.
+
+---
+
 ## Requirements
 -A computer (Windows/Mac/Linux)
 
