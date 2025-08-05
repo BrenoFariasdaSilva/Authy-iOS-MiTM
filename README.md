@@ -1,6 +1,25 @@
 # Authy-iOS-MiTM
 Guide to extract authenticator tokens from the Authy iOS app with mitmproxy
 
+---
+
+</div>
+
+<div align="center">
+
+![GitHub Code Size in Bytes Badge](https://img.shields.io/github/languages/code-size/BrenoFariasdaSilva/Authy-iOS-MiTM)
+![GitHub Last Commit Badge](https://img.shields.io/github/last-commit/BrenoFariasdaSilva/Authy-iOS-MiTM)
+![GitHub License Badge](https://img.shields.io/github/license/BrenoFariasdaSilva/Authy-iOS-MiTM)
+![Wakatime Badge](https://wakatime.com/badge/github/BrenoFariasdaSilva/Authy-iOS-MiTM.svg)
+
+</div>
+
+<div align="center">
+
+![RepoBeats Statistics](https://repobeats.axiom.co/api/embed/acb10c4d8be1329bb6b375f5170d258cc275e940.svg "Repobeats analytics image")
+
+</div>
+
 ## Requirements
 -A computer (Windows/Mac/Linux)
 
