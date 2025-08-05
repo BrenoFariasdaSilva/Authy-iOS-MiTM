@@ -34,6 +34,13 @@ It took a lot of work to make this fork, so I hope you enjoy it and find it usef
 ![RepoBeats Statistics](https://repobeats.axiom.co/api/embed/acb10c4d8be1329bb6b375f5170d258cc275e940.svg "Repobeats analytics image")
 
 </div>
+- [Authy-iOS-MiTM. ](#authy-ios-mitm-)
+	- [Requirements](#requirements)
+	- [Step 1: Setting up mitmproxy](#step-1-setting-up-mitmproxy)
+	- [Step 2: Dumping tokens](#step-2-dumping-tokens)
+	- [Step 3: Decrypting tokens](#step-3-decrypting-tokens)
+	- [Compatibility note](#compatibility-note)
+	- [Other info](#other-info)
 
 ## Requirements
 -A computer (Windows/Mac/Linux)
