@@ -104,6 +104,15 @@ First, you must ensure you have [Python 3.13.1+](https://www.python.org) install
 
 After that, inside the repository folder, copy the `.env-example` file to a new file named `.env` and open it in a text editor. Replace `YOUR_AUTHY_BACKUP_PASSWORD_HERE` with your actual Authy backup password, then save and close the file.
 
+### Step 4: Decrypting tokens
+Assuming you i've installed all of the requirements in the previous step, you can now decrypt your tokens.
+Inside the repository folder, ensure you have the `authenticator_tokens.json` file you downloaded in Step 2 in the same folder as the scripts (i.e., the root of the repository, `Authy-iOS-MiTM`). After that, run `make`, which will run the `main.py` script that will call all of the three scripts (`authenticador_tokens.py`, `generate_uris.py`, and `generate_qr_codes.py`) to decrypt your tokens, generate URIs for them (saved in the `URIs.txt` and `URIs.json` files), and optionally generate QR codes for them.
+
+The script will prompt you for your backup password if you didn't create the `.env` file, which does not show in the terminal for privacy reasons. After entering your password and hitting Enter, you should have a `decrypted_tokens.json` file, which contains the decrypted authenticator seeds from your Authy account. Please note that this JSON file is not in a standard format that you can import to other authenticator apps. The file that you can import to other authenticator apps is the `URIs.json` file, which contains the URIs for each of your tokens in a format that is compatible with the authenticator app that you choose during the `generate_uris.py` script execution (`Select an authenticator app to generate URIs for: (1. 2FA, 2. Aegis, 3. Google Authenticator, 4. Microsoft Authenticator`).
+
+> [!NOTE]
+> If you see "Decryption failed: Invalid padding length" as the decrypted_seed in your JSON file, you entered an incorrect backup password. Run the script again with the correct backup password.
+
 ---
 
 ## Compatibility note
