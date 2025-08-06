@@ -3,6 +3,7 @@ from collections import defaultdict # For counting occurrences of names
 from main import BackgroundColors, Style, verbose_output # Importing necessary functions and constants from main.py
 
 SHOW_IN_TERMINAL = False # Flag to control whether to show URIs in the terminal
+CAPITALIZE_NAME = True # Flag to control whether to capitalize names in the URIs
 
 URI_FORMATS = { # Dictionary of URI formats for different authenticator apps
    "Aegis": "otpauth://totp/{name}?secret={secret}&digits={digits}&algorithm=SHA1&period=30&issuer={issuer}",
@@ -74,6 +75,7 @@ def convert_to_uris(json_data, app_choice):
 
       for token in tokens: # Iterate through each token in the decrypted tokens
          name = token.get("name").replace(":", "_").replace(" ", "_") # Replace ":" and spaces in the name with underscores
+         name = " ".join(word.capitalize() for word in name.split("_")) if CAPITALIZE_NAME else name # Capitalize each word in the name if CAPITALIZE_NAME is True
          issuer = token.get("issuer").replace(" ", "_") if token.get("issuer") else "" # Replace spaces in the issuer with underscores, if issuer exists
          secret = token.get("decrypted_seed") # Get the decrypted seed from the token
          digits = token.get("digits", 6) # Get the number of digits, defaulting to 6 if not specified
