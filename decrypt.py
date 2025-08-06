@@ -24,7 +24,7 @@ def ensure_input_file_exists_with_extension(input_file: str) -> str:
       return input_file # If it exists, return the file path as is
 
    base, ext = os.path.splitext(input_file) # Split the input file into base name and extension
-   if ext and os.path.isfile(base): # If the base name exists without an extension
+   if ext and os.path.isfile(base) and not os.path.splitext(base)[1]: # Check if a file exists with the base name but has no extension
       os.rename(base, input_file) # Rename the base file to have the correct extension
       verbose_output(f"{BackgroundColors.GREEN}DEBUG: Renamed '{base}' to '{input_file}'{Style.RESET_ALL}")
       return input_file # Return the renamed file path
