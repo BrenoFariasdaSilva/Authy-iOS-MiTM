@@ -10,6 +10,28 @@ from dotenv import load_dotenv # For loading environment variables from a .env f
 from getpass import getpass # For securely getting the backup password input
 from main import BackgroundColors, Style, verbose_output # Importing necessary functions and constants from main.py
 
+def ensure_input_file_exists_with_extension(input_file: str) -> str:
+   """
+   Ensures that the input file exists. If not, tries to find a matching file without an extension
+   and renames it to have the correct extension.
+
+   :param input_file: The input file path, including expected extension (e.g., '.json')
+   :return: The (possibly renamed) valid file path
+   :raises FileNotFoundError: If no suitable file is found
+   """
+
+   if os.path.isfile(input_file): # Check if the input file exists with the given name
+      return input_file # If it exists, return the file path as is
+
+   base, ext = os.path.splitext(input_file) # Split the input file into base name and extension
+   if ext and os.path.isfile(base): # If the base name exists without an extension
+      os.rename(base, input_file) # Rename the base file to have the correct extension
+      verbose_output(f"{BackgroundColors.GREEN}DEBUG: Renamed '{base}' to '{input_file}'{Style.RESET_ALL}")
+      return input_file # Return the renamed file path
+
+   raise FileNotFoundError(f"Input file '{input_file}' not found. Please ensure the file exists with the correct extension.") # Raise an error if no suitable file is found
+
+
 def load_authenticator_data(input_file: str) -> dict:
    """
    Loads the JSON data from the input file and verifies the presence of 'authenticator_tokens'.
@@ -18,6 +40,8 @@ def load_authenticator_data(input_file: str) -> dict:
    :return: Parsed JSON data as a dictionary
    :raises FileNotFoundError, json.JSONDecodeError, KeyError: If file issues or key missing
    """
+
+   input_file = ensure_input_file_exists_with_extension(input_file) # Ensure the input file exists with the correct extension
 
    verbose_output(f"{BackgroundColors.GREEN}DEBUG: Input file: {BackgroundColors.CYAN}{input_file}{Style.RESET_ALL}")
 
