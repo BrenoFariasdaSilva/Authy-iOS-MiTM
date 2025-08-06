@@ -3,6 +3,7 @@
 *.json
 *.csv
 *.png
+!requirements.txt
 
 # Ignore the Compressed Files
 *.zip
