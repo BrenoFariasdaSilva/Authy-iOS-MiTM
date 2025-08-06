@@ -60,6 +60,7 @@ In a short way, you install mitmproxy, set manually the proxy on your iOS device
 ---
 
 ## Requirements
+
 - A computer (Windows/Mac/Linux)
 - An iOS/iPadOS device (using a secondary device is recommended)
 - A basic understanding of the command line and running Python scripts
@@ -72,6 +73,7 @@ In a short way, you install mitmproxy, set manually the proxy on your iOS device
 ## Setup
 
 ### Step 1: Setting up mitmproxy
+
 Extracting tokens works by capturing HTTPS traffic received by the Authy app after logging in. This traffic contains your tokens in encrypted form, which is then decrypted in a later step so that you can access your authenticator seeds. In order to receive this traffic, we use mitmproxy, which is an easy-to-use tool that allows you to intercept traffic from apps and websites on your device.
 
 To begin, install [mitmproxy](https://www.mitmproxy.org) on your computer, then run `mitmweb --allow-hosts "api.authy.com"` in your terminal to launch mitmweb (which is a user-friendly interface for mitmproxy) with HTTPS proxying on for "api.authy.com". Once proxying has started, connect your iOS device to the proxy by going to Settings -> Wi-Fi -> (your network) -> Configure Proxy, set it to "Manual", then enter your computer's private IP for "Server" and 8080 for "Port".
@@ -84,6 +86,7 @@ Once your iOS device is connected to the proxy, you'll need to install the mitmp
 At this point, you have completed the process of setting up mitmproxy to capture HTTPS traffic from your iOS device. Keep the proxy connected for the next step, which is dumping tokens received from the Authy iOS app.
 
 ### Step 2: Dumping tokens
+
 > [!NOTE]
 > In order for this to work, you must have your Authy tokens synced to the cloud and you must have a backup password set. It is recommended to dump tokens with a secondary device in case something goes wrong.
 
@@ -99,9 +102,12 @@ At this point, mitmproxy should have logged your authenticator tokens in encrypt
 
 `{ "authenticator_tokens": [ { "account_type": "example", "digits": 6, "encrypted_seed": "something", "issuer": "Example.com", "key_derivation_iterations": 100000, "logo": "example", "name": "Example.com", "original_name": "Example.com", "password_timestamp": 12345678, "salt": "something", "unique_id": "123456", "unique_iv": null }, ...`
 
-Obviously, yours will show real information about every token you have in your Authy account. Once you find this request, switch to the "Flow" tab in mitmweb, then hit "Download" to download this data into a file called "authenticator_tokens". Rename this file to "authenticator_tokens.json" and disconnect your device from the proxy (select "Off" in Settings -> Wi-Fi -> (your network) -> Configure Proxy) before exiting out of the proxy on your computer (hit Ctrl+C on the terminal window running mitmweb) and continuing to the next step.
+Obviously, yours will show real information about every token you have in your Authy account. Once you find this request, switch to the "Flow" tab in mitmweb, then hit "Download" to download this data into a file called `authenticator_tokens`. You may rename this file to `authenticator_tokens.json`, but if you don't, the script will automatically detect it and add the `.json` extension as needed.
+
+After that, disconnect your device from the proxy (select "Off" in Settings -> Wi-Fi -> (your network) -> Configure Proxy) before exiting out of the proxy on your computer (hit Ctrl+C on the terminal window running mitmweb) and continuing to the next step.
 
 ### Step 3: Setting Up Requirements
+
 Before decrypting your tokens, you need install all of the other requirements. 
 First, you must ensure you have [Python 3.13.1+](https://www.python.org) installed on your computer. After that, verify that you have `Make` installed on your computer (it comes pre-installed on Linux and Mac, but Windows users can install it via [Chocolatey](https://chocolatey.org/install) with `choco install make`), then run `make dependencies` to set up a Python virtual environment and install the required dependencies. If you don't have `Make` installed, you can manually set up a Python virtual environment and install the dependencies by following these steps:
 1. Open your terminal and navigate to the repository folder.
@@ -114,8 +120,9 @@ First, you must ensure you have [Python 3.13.1+](https://www.python.org) install
 After that, inside the repository folder, copy the `.env-example` file to a new file named `.env` and open it in a text editor. Replace `YOUR_AUTHY_BACKUP_PASSWORD_HERE` with your actual Authy backup password, then save and close the file.
 
 ### Step 4: Decrypting tokens
+
 Assuming you i've installed all of the requirements in the previous step, you can now decrypt your tokens.
-Inside the repository folder, ensure you have the `authenticator_tokens.json` file you downloaded in Step 2 in the same folder as the scripts (i.e., the root of the repository, `Authy-iOS-MiTM`). After that, run `make`, which will run the `main.py` script that will call all of the three scripts (`authenticador_tokens.py`, `generate_uris.py`, and `generate_qr_codes.py`) to decrypt your tokens, generate URIs for them (saved in the `URIs.txt` and `URIs.json` files), and optionally generate QR codes for them.
+Inside the repository folder, ensure you have the `authenticator_tokens.json` file you downloaded in Step 2 is in the same folder as the scripts (i.e., the root of the repository, `Authy-iOS-MiTM`). After that, run `make`, which will run the `main.py` script that will call all of the three scripts (`authenticador_tokens.py`, `generate_uris.py`, and `generate_qr_codes.py`) to decrypt your tokens, generate URIs for them (saved in the `URIs.txt` and `URIs.json` files), and optionally generate QR codes for them.
 
 The script will prompt you for your backup password if you didn't create the `.env` file, which does not show in the terminal for privacy reasons. After entering your password and hitting Enter, you should have a `decrypted_tokens.json` file, which contains the decrypted authenticator seeds from your Authy account. Please note that this JSON file is not in a standard format that you can import to other authenticator apps. The file that you can import to other authenticator apps is the `URIs.json` file, which contains the URIs for each of your tokens in a format that is compatible with the authenticator app that you choose during the `generate_uris.py` script execution (`Select an authenticator app to generate URIs for: (1. 2FA, 2. Aegis, 3. Google Authenticator, 4. Microsoft Authenticator`).
 
@@ -125,9 +132,11 @@ The script will prompt you for your backup password if you didn't create the `.e
 ---
 
 ## Compatibility note
+
 This method will never work on unrooted Android devices due to the fact that the Authy app only trusts root certificates from the system store and rooting being needed to add certificates to the system store. If you have a rooted Android device and would like to use this guide, add the mitmproxy certificate to the system store instead, and you should be able to follow this guide normally. The reason this works on iOS is that iOS treats system root CAs and user-installed root CAs the same by default, and unless an app uses SSL pinning or some other method to deny user-installed root CAs, it can be HTTPS intercepted via a MiTM attack without a jailbreak needed. If Twilio wants to patch this by implementing SSL pinning, they absolutely can.
 
 ## Other info
+
 You can find some more information on the comments of this GitHub Gist: [https://gist.github.com/gboudreau/94bb0c11a6209c82418d01a59d958c93](https://gist.github.com/gboudreau/94bb0c11a6209c82418d01a59d958c93).
 
 If something goes wrong while following this guide, please file a GitHub issue and I will look into it.
@@ -141,5 +150,7 @@ The guide for contributing is in the [CONTRIBUTING.md](CONTRIBUTING.md) file. If
 ---
 
 ## License
+
 ### MIT License
+
 This project is licensed under the [MIT License](LICENSE).
