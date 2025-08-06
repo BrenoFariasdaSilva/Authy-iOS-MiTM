@@ -1,4 +1,5 @@
 import json # For handling JSON data
+from collections import defaultdict # For counting occurrences of names
 from main import BackgroundColors, Style, verbose_output # Importing necessary functions and constants from main.py
 
 SHOW_IN_TERMINAL = False # Flag to control whether to show URIs in the terminal
@@ -201,7 +202,16 @@ def handle_uri_generation(json_data, app_choice, output_filename):
       for i, uri in enumerate(uris): # Loop through the URIs and print them in the terminal
          print(f"{BackgroundColors.BOLD}{i + 1}. {BackgroundColors.CYAN}{uri}{Style.RESET_ALL}")
 
-   uri_data = {"URIs": [{"name": extract_uri_name(uri), "uri": uri} for uri in uris]} # Create a dictionary with URIs and their names
+   name_counts = defaultdict(int) # Dictionary to count occurrences of names
+   unique_uri_items = [] # List to store unique URI items with names
+
+   for uri in uris: # Loop through each URI
+      name = extract_uri_name(uri) # Extract the name from the URI
+      name_counts[name] += 1 # Increment the count for the name
+      unique_name = f"{name} {name_counts[name]:02}" if name_counts[name] > 1 else name # If the name has duplicates, append the count to the name
+      unique_uri_items.append({"name": unique_name, "uri": uri}) # Append the unique URI item to the list
+
+   uri_data = {"URIs": unique_uri_items} # Create a dictionary to hold the URIs data
    custom_sort(uri_data["URIs"]) # Sort the URIs based on their names
 
    save_uris_to_json(app_choice, uri_data, output_filename) # Save the URIs to a JSON file
