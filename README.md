@@ -8,9 +8,9 @@
 
 ---
 
-Guide to extract authenticator tokens from the Authy iOS app with mitmproxy.
+Guide to extract Authenticator Tokens (TOTP URI) from the [Authy iOS App](https://apps.apple.com/br/app/twilio-authy/id494168017) with [MIMTProxy](https://www.mitmproxy.org/).
 
-This is an improved and fully automated, documented, improved, and easy to use version of the improvements made by [AlexTech01](https://github.com/AlexTech01).
+This is an improved and fully automated, documented, improved, and easy to use version of the original repository created by [AlexTech01](https://github.com/AlexTech01).
 
 In this fork, i've modified the original scripts to be more user-friendly, including documentation, virtual environment setup, `requirements.txt`, `.env`, `.gitignore`, and a `Makefile` for easy setup and usage. Not only that, for the files `decrypt.py`, i've improved the code quality, readability, and even split big functions into smaller ones for better maintainability. Also, the original `script.py` was broken in the QR code generation, so I fixed it, splitting the `script.py` into two files: `generate_uris.py` for the URI generation and `generate_qr_codes.py` for the QR code generation. The original script to generate QR Codes was also more complex and used the pillow lib. I rewrote the code to be simpler and more efficient. There was also the addition of the `main.py` file, which is the main entry point of the script, and it will call all of the three scripts (`authenticador_tokens.py`, `generate_uris.py`, and `generate_qr_codes.py`) to make it easier to use. Lastly, i've updated this README file to include all of the new features and improvements made in this fork. With all that said, this is an improvement over the original project, which was already a great project, and it is now easier to use and more user-friendly, but obviously the original authors deserve all the credit, as i would not be able to do this without their work.
 
