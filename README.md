@@ -57,6 +57,9 @@ This repository provides a guide and scripts to extract authenticator tokens fro
 So, by using MITMProxy, it enables you to capture HTTPS traffic, extract encrypted tokens, and decrypt them to obtain authenticator seeds.
 In a short way, you install MITMProxy, set manually the proxy on your iOS device to be the MITMProxy installed on your computer, so, when you log-out and log back in, as your computer is the proxy for your iOS device, it will capture the HTTPS traffic from the Authy app, which contains your authenticator tokens file (`authenticator_tokens.json`) in encrypted form. After that, you can decrypt the tokens using a Python script and your backup password, which will give you access to your authenticator Time-based One-Time Password (TOTP) Uniform Resource Identifier (URI) for many Authenticator apps, such as [2FA](https://apps.apple.com/us/app/2fa-authenticator-2fas/id1217793794), [Aegis](https://getaegis.app/), [Google Authenticator](https://apps.apple.com/us/app/google-authenticator/id388497605), and [Microsoft Authenticator](https://www.microsoft.com/en/security/mobile-authenticator-app). With those URI, you can import your tokens into any of those apps, or scan the generated QR codes for them.
 
+> [!NOTE]
+> You can also store the TOTP URIs in a password manager that supports TOTP, such as [Bitwarden](https://bitwarden.com/help/integrated-authenticator/). BitWarden, inside each login, there is a field below the password field called "Authenticator Key (TOTP)", where you can paste the TOTP URI, and BitWarden will automatically generate the TOTP codes for you. Unfortunately, to actually view the 30-second codes, you need a BitWarden Premium subscription, but this is a good option to store your TOTP URIs securely for backup purposes, rather than storing them in a text file or a JSON file, which is not secure.
+
 ---
 
 ## Requirements
