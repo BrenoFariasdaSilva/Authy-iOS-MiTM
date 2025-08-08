@@ -59,6 +59,8 @@ In a short way, you install MITMProxy, set manually the proxy on your iOS device
 
 > [!NOTE]
 > You can also store the TOTP URIs in a password manager that supports TOTP, such as [Bitwarden](https://bitwarden.com/help/integrated-authenticator/). BitWarden, inside each login, there is a field below the password field called "Authenticator Key (TOTP)", where you can paste the TOTP URI, and BitWarden will automatically generate the TOTP codes for you. Unfortunately, to actually view the 30-second codes, you need a BitWarden Premium subscription, but this is a good option to store your TOTP URIs securely for backup purposes, rather than storing them in a text file or a JSON file, which is not secure.
+>
+> Honestly, I would recommend you store the TOTP URIs in Bitwarden and then export the Bitwarden vault periodically as a backup and import it into the Apple's Passwords app, as it will detect the TOTP URIs and generate the TOTP codes for you, so you can use the Passwords app as your main authenticator app. This way, you can have a secure backup of your TOTP URIs and also use them in the Passwords app, which I'm pretty sure is built-in in iOS and MacOS for a few years now and is completely free to use.
 
 ---
 
