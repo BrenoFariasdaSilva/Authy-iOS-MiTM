@@ -44,6 +44,7 @@ It took a lot of work to make this fork, so I hope you enjoy it and find it usef
 		- [Step 1: Setting up mitmproxy](#step-1-setting-up-mitmproxy)
 			- [Installing the mitmproxy root certificate on iOS](#installing-the-mitmproxy-root-certificate-on-ios)
 		- [Step 2: Dumping tokens](#step-2-dumping-tokens)
+			- [How to find the correct packet in mitmweb](#how-to-find-the-correct-packet-in-mitmweb)
 		- [Step 3: Setting Up Requirements](#step-3-setting-up-requirements)
 		- [Step 4: Decrypting tokens](#step-4-decrypting-tokens)
 	- [Compatibility note](#compatibility-note)
@@ -139,13 +140,47 @@ The first step in dumping tokens is to sign out of the Authy app on your device.
 > [!NOTE]
 > If you get an "attestation token" error, try opening the Authy app with the proxy disconnected, enter your phone number, and then connect to the proxy before you tap on SMS/phone call/existing device verification.
 
-At this point, mitmproxy should have logged your authenticator tokens in encrypted form. To find your tokens, simply search for "authenticator_tokens" in the "Flow List" tab of the mitmweb UI, then look at the "Response" of each request shown until you see something that looks like this:
+At this point, mitmproxy should have captured your authenticator tokens in encrypted form.
 
-`{ "authenticator_tokens": [ { "account_type": "example", "digits": 6, "encrypted_seed": "something", "issuer": "Example.com", "key_derivation_iterations": 100000, "logo": "example", "name": "Example.com", "original_name": "Example.com", "password_timestamp": 12345678, "salt": "something", "unique_id": "123456", "unique_iv": null }, ...`
+#### How to find the correct packet in mitmweb
 
-Obviously, yours will show real information about every token you have in your Authy account. Once you find this request, switch to the "Flow" tab in mitmweb, then hit "Download" to download this data into a file called `authenticator_tokens`. You may rename this file to `authenticator_tokens.json`, but if you don't, the script will automatically detect it and add the `.json` extension as needed.
+In the mitmweb UI, it’s common to see **many** smaller packets — often POST requests — each containing only a single token.  
+These are **not** the ones you want. The correct request contains **all tokens together** in a single response.
 
-After that, disconnect your device from the proxy (select "Off" in Settings -> Wi-Fi -> (your network) -> Configure Proxy) before exiting out of the proxy on your computer (hit Ctrl+C on the terminal window running mitmweb) and continuing to the next step.
+1. In the **Flow List** tab, use the search box to look for `"token"`.
+2. Among the results, locate the first **GET** request (not POST).
+3. Look at the **Size** column — the correct packet will be noticeably larger than the others (typically a few KB if you have many tokens).
+4. Open this GET request and check its **Response**; it should look similar to:
+
+  ```json
+  {
+    "authenticator_tokens": [
+     {
+      "account_type": "example",
+      "digits": 6,
+      "encrypted_seed": "something",
+      "issuer": "Example.com",
+      "key_derivation_iterations": 100000,
+      "logo": "example",
+      "name": "Example.com",
+      "original_name": "Example.com",
+      "password_timestamp": 12345678,
+      "salt": "something",
+      "unique_id": "123456",
+      "unique_iv": null
+     },
+     ...
+    ]
+  }
+  ```
+
+💡 Tip: The right packet is usually one large GET request of 5–10 KB or more, depending on how many tokens you have.
+
+Once found, switch to the Flow tab in mitmweb and click Download to save it as authenticator_tokens.  
+We strongly recommend renaming this file to authenticator_tokens.json, but if you don’t, the script will automatically detect it and add the .json extension as needed, but this is not recommended as it may cause unknown issues.
+
+After that, disconnect your device from the proxy (select "Off" in Settings → Wi-Fi → (your network) → Configure Proxy) before exiting mitmweb (Ctrl+C in the terminal) and continuing to the next step.
+
 
 ### Step 3: Setting Up Requirements
 
@@ -154,8 +189,8 @@ First, you must ensure you have [Python 3.13.1+](https://www.python.org) install
 1. Open your terminal and navigate to the repository folder.
 2. Create a virtual environment by running `python -m venv venv` (or `python3 -m venv venv` depending on your system).
 3. Activate the virtual environment:
-	- On Windows, run `venv\Scripts\activate`
-	- On Mac/Linux, run `source venv/bin/activate`
+  - On Windows, run `venv\Scripts\activate`
+  - On Mac/Linux, run `source venv/bin/activate`
 4. Install the required dependencies by running `pip install -r requirements.txt`
 
 After that, inside the repository folder, copy the `.env-example` file to a new file named `.env` and open it in a text editor. Replace `YOUR_AUTHY_BACKUP_PASSWORD_HERE` with your actual Authy backup password, then save and close the file.
