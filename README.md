@@ -42,6 +42,7 @@ It took a lot of work to make this fork, so I hope you enjoy it and find it usef
 	- [Requirements](#requirements)
 	- [Setup](#setup)
 		- [Step 1: Setting up mitmproxy](#step-1-setting-up-mitmproxy)
+			- [Installing the mitmproxy root certificate on iOS](#installing-the-mitmproxy-root-certificate-on-ios)
 		- [Step 2: Dumping tokens](#step-2-dumping-tokens)
 		- [Step 3: Setting Up Requirements](#step-3-setting-up-requirements)
 		- [Step 4: Decrypting tokens](#step-4-decrypting-tokens)
@@ -81,12 +82,47 @@ In a short way, you install MITMProxy, set manually the proxy on your iOS device
 
 Extracting tokens works by capturing HTTPS traffic received by the Authy app after logging in. This traffic contains your tokens in encrypted form, which is then decrypted in a later step so that you can access your authenticator seeds. In order to receive this traffic, we use mitmproxy, which is an easy-to-use tool that allows you to intercept traffic from apps and websites on your device.
 
-To begin, install [mitmproxy](https://www.mitmproxy.org) on your computer, then run `mitmweb --allow-hosts "api.authy.com"` in your terminal to launch mitmweb (which is a user-friendly interface for mitmproxy) with HTTPS proxying on for "api.authy.com". Once proxying has started, connect your iOS device to the proxy by going to Settings -> Wi-Fi -> (your network) -> Configure Proxy, set it to "Manual", then enter your computer's private IP for "Server" and 8080 for "Port".
+To begin, install [mitmproxy](https://www.mitmproxy.org) on your computer, then run:
+
+```bash
+mitmweb --allow-hosts "api.authy.com"
+```
+
+in your terminal to launch mitmweb (which is a user-friendly interface for mitmproxy) with HTTPS proxying on for `api.authy.com`. Once proxying has started, connect your iOS device to the proxy:
+
+**On iOS:**  
+Settings → Wi-Fi → (your network) → Configure Proxy → set to "Manual"  
+Enter your computer's private IP for "Server" and 8080 for "Port".
 
 > [!NOTE]
-> Your computer's private IP can be found in its Wi-Fi/network settings, and is typically in the format "192.168.x.x" or "10.x.x.x".
+> Your computer's private IP can be found in its Wi-Fi/network settings, and is typically in the format 192.168.x.x or 10.x.x.x.
 
-Once your iOS device is connected to the proxy, you'll need to install the mitmproxy root CA, which is required for HTTPS proxying. The root CA keys mitmproxy uses is randomly generated for each installation and is not shared. To install the root CA on your iOS device, visit `mitm.it` in Safari with the proxy connected, then tap "Get mitmproxy-ca-cert.pem" under the iOS section. Tap "Allow" on the message from iOS asking to install a configuration profile, then go to Settings, tap the "Profile Downloaded" message, and confirm installing the profile. **This may seem like the end, but it's not.** After the certificate is installed, you must allow root trust for it in Settings -> General -> About -> Certificate Trust Settings in order for it to work on websites and apps. Failure to do this step will result in Authy failing with an SSL validation error.
+---
+
+#### Installing the mitmproxy root certificate on iOS
+
+Once your iOS device is connected to the proxy, you must install the mitmproxy root CA certificate. This is required for HTTPS proxying.  
+The root CA keys mitmproxy uses are randomly generated for each installation and are not shared.
+
+1. On your iOS device (with the proxy connected), open Safari and visit:  
+  `mitm.it`
+2. Under the **iOS** section, tap **"Get mitmproxy-ca-cert.pem"**.
+3. Tap **Allow** on the iOS message asking to download a configuration profile.
+
+At this point, the profile is downloaded but **not yet installed**.
+
+4. Go to:  
+  **Settings → General → VPN & Device Management**  
+  Inside this menu, you will see the downloaded "mitmproxy" profile.  
+  Tap it, then tap **Install** (top right corner), and confirm when prompted.
+
+5. **Only after installing the profile**, go to:  
+  **Settings → General → About → Certificate Trust Settings**  
+  Find **mitmproxy** in the list and toggle **"Enable Full Trust for Root Certificates"** to ON.
+
+---
+
+**⚠ Important:** Failure to install the profile via **VPN & Device Management** and then enable full trust in **Certificate Trust Settings** will cause Authy to fail with an SSL validation error.
 
 At this point, you have completed the process of setting up mitmproxy to capture HTTPS traffic from your iOS device. Keep the proxy connected for the next step, which is dumping tokens received from the Authy iOS app.
 
