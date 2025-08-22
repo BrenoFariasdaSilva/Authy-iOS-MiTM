@@ -1,5 +1,6 @@
 import json # For handling JSON data
 import urllib.parse # For URL encoding
+import uuid # For generating unique IDs for Proton Authenticator
 from collections import defaultdict # For counting occurrences of names
 from main import BackgroundColors, Style, verbose_output # Importing necessary functions and constants from main.py
 
@@ -11,6 +12,7 @@ URI_FORMATS = { # Dictionary of URI formats for different authenticator apps
    "Aegis": "otpauth://totp/{name}?secret={secret}&digits={digits}&algorithm=SHA1&period=30&issuer={issuer}",
    "Google Authenticator": "otpauth://totp/{issuer}:{name}?secret={secret}&digits={digits}&algorithm=SHA1&period=30",
    "Microsoft Authenticator": "otpauth://totp/{issuer}:{name}?secret={secret}&digits={digits}&algorithm=SHA1&period=30",
+   "Proton Authenticator": "otpauth://totp/{name}?secret={secret}&digits={digits}&algorithm=SHA1&period=30&issuer={issuer}",
 }
 
 def get_app_choice():
@@ -20,7 +22,7 @@ def get_app_choice():
    :return: Selected authenticator app as a string
    """
 
-   app_choices = ["2FA", "Aegis", "Google Authenticator", "Microsoft Authenticator"] # List of available authenticator apps
+   app_choices = ["2FA", "Aegis", "Google Authenticator", "Microsoft Authenticator", "Proton Authenticator"] # List of available authenticator apps
    app_choices.sort() # Sort the list alphabetically
 
    print(f"{BackgroundColors.GREEN}Select an authenticator app to generate URIs for:{Style.RESET_ALL}")
@@ -176,6 +178,36 @@ def save_uris_to_json(app_choice, uri_data, output_filename):
       json.dump(uri_data, uri_file, indent=4) # Write the URIs data to the file with indentation for readability
       print(f"\n{BackgroundColors.GREEN}URIs in the format for {BackgroundColors.CYAN}{app_choice} App{BackgroundColors.GREEN} saved to {BackgroundColors.CYAN}{output_filename}.json{Style.RESET_ALL}") # Output success message
 
+def generate_proton_json(app_choice, uri_data):
+   """
+   Converts uri_data to Proton Authenticator compatible JSON structure by parsing the URI field.
+
+   :param app_choice: Selected authenticator app
+   :param uri_data: Dictionary containing URIs and their names
+   :param output_filename: Output file name without extension
+   """
+
+   proton_data = {"version": 1, "entries": []} # Initialize the Proton Authenticator data structure
+   for item in uri_data.get("URIs", []): # Loop through each URI item
+      name = item.get("name") or "Unnamed" # Get the name from the item, defaulting to "Unnamed" if not present
+      uri = item.get("uri") or "" # Get the URI from the item, defaulting to an empty string if not present
+
+      entry = { # Create the entry structure for Proton Authenticator
+         "id": str(uuid.uuid4()), # Generate a unique ID for the entry
+         "content": { # Content of the entry
+            "uri": uri, # The URI string
+            "entry_type": "Totp", # The type of entry, which is TOTP
+            "name": name # The name of the entry
+         },
+         "note": None # No additional note for the entry
+      }
+
+      proton_data["entries"].append(entry) # Append the entry to the Proton Authenticator data structure
+
+   output_filename = app_choice.replace(' ', '_').lower() # Create a filename based on the app choice
+   with open(f"{output_filename}.json", "w") as uri_file: # Open the output file in write mode
+      json.dump(proton_data, uri_file, indent=4) # Write the Proton data to the file
+      print(f"\n{BackgroundColors.GREEN}URIs in the format for {BackgroundColors.CYAN}{app_choice} App{BackgroundColors.GREEN} saved to {BackgroundColors.CYAN}{output_filename}.json{Style.RESET_ALL}") # Output success message
 
 def save_uris_to_txt(app_choice, uri_data, output_filename):
    """
@@ -224,6 +256,7 @@ def handle_uri_generation(json_data, app_choice, output_filename):
    custom_sort(uri_data["URIs"]) # Sort the URIs based on their names
 
    save_uris_to_json(app_choice, uri_data, output_filename) # Save the URIs to a JSON file
+   generate_proton_json(app_choice, uri_data) if app_choice == "Proton Authenticator" else None # Save the URIs to a Proton-specific JSON file if the app choice is Proton
    save_uris_to_txt(app_choice, uri_data, output_filename) # Save the URIs to a TXT file
 
 
