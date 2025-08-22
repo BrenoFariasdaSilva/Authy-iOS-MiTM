@@ -12,7 +12,7 @@ Guide to extract Authenticator Tokens (TOTP URI) from the [Authy iOS App](https:
 
 This is an improved and fully automated, documented, improved, and easy to use version of the original repository created by [AlexTech01](https://github.com/AlexTech01).
 
-In this fork, i've modified the original scripts to be more user-friendly, including documentation, virtual environment setup, `requirements.txt`, `.env`, `.gitignore`, and a `Makefile` for easy setup and usage. Not only that, for the files `decrypt.py`, i've improved the code quality, readability, and even split big functions into smaller ones for better maintainability. Also, the original `script.py` was broken in the QR code generation, so I fixed it, splitting the `script.py` into two files: `generate_uris.py` for the URI generation and `generate_qr_codes.py` for the QR code generation. The original script to generate QR Codes was also more complex and used the pillow lib. I rewrote the code to be simpler and more efficient. There was also the addition of the `main.py` file, which is the main entry point of the script, and it will call all of the three scripts (`authenticador_tokens.py`, `generate_uris.py`, and `generate_qr_codes.py`) to make it easier to use. Lastly, i've updated this README file to include all of the new features and improvements made in this fork. With all that said, this is an improvement over the original project, which was already a great project, and it is now easier to use and more user-friendly, but obviously the original authors deserve all the credit, as i would not be able to do this without their work.
+In this fork, i've modified the original scripts to be more user-friendly, including documentation, virtual environment setup, `requirements.txt`, `.env`, `.gitignore`, and a `Makefile` for easy setup and usage. Not only that, for the files `decrypt.py`, i've improved the code quality, readability, and even split big functions into smaller ones for better maintainability. Also, the original `script.py` was broken in the QR code generation, so I fixed it, splitting the `script.py` into two files: `generate_uris.py` for the URI generation and `generate_qr_codes.py` for the QR code generation. The original script to generate QR Codes was also more complex and used the pillow lib. I rewrote the code to be simpler and more efficient. There was also the addition of the `main.py` file, which is the main entry point of the script, and it will call all of the three scripts (`authenticador_tokens.py`, `generate_uris.py`, and `generate_qr_codes.py`) to make it easier to use. Not only that, but i've added the `Proton Authenticator` support, which a few people asked for. Lastly, i've updated this README file to include all of the new features and improvements made in this fork. With all that said, this is an improvement over the original project, which was already a great project, and it is now easier to use and more user-friendly, but obviously the original authors deserve all the credit, as i would not be able to do this without their work.
 
 It took a lot of work to make this fork, so I hope you enjoy it and find it useful. If you have any questions or suggestions, feel free to open an issue or a pull request.
 
@@ -37,27 +37,28 @@ It took a lot of work to make this fork, so I hope you enjoy it and find it usef
 
 ## Table of Contents
 - [Authy-iOS-MiTM. ](#authy-ios-mitm-)
-	- [Table of Contents](#table-of-contents)
-	- [Introduction](#introduction)
-	- [Requirements](#requirements)
-	- [Setup](#setup)
-		- [Step 1: Setting up mitmproxy](#step-1-setting-up-mitmproxy)
-			- [Installing the mitmproxy root certificate on iOS](#installing-the-mitmproxy-root-certificate-on-ios)
-		- [Step 2: Dumping tokens](#step-2-dumping-tokens)
-			- [How to find the correct packet in mitmweb](#how-to-find-the-correct-packet-in-mitmweb)
-		- [Step 3: Setting Up Requirements](#step-3-setting-up-requirements)
-		- [Step 4: Decrypting tokens](#step-4-decrypting-tokens)
-	- [Compatibility note](#compatibility-note)
-	- [Other info](#other-info)
-	- [Contributing](#contributing)
-	- [License](#license)
-		- [MIT License](#mit-license)
+  - [Table of Contents](#table-of-contents)
+  - [Introduction](#introduction)
+  - [Requirements](#requirements)
+  - [Setup](#setup)
+    - [Step 1: Setting up mitmproxy](#step-1-setting-up-mitmproxy)
+      - [Installing the mitmproxy root certificate on iOS](#installing-the-mitmproxy-root-certificate-on-ios)
+    - [Step 2: Dumping tokens](#step-2-dumping-tokens)
+      - [How to find the correct packet in mitmweb](#how-to-find-the-correct-packet-in-mitmweb)
+    - [Step 3: Setting Up Requirements](#step-3-setting-up-requirements)
+    - [Step 4: Decrypting tokens](#step-4-decrypting-tokens)
+    - [Proton Authenticator support](#proton-authenticator-support)
+  - [Compatibility note](#compatibility-note)
+  - [Other info](#other-info)
+  - [Contributing](#contributing)
+  - [License](#license)
+    - [MIT License](#mit-license)
 
 ## Introduction
 
 This repository provides a guide and scripts to extract authenticator tokens from the [Authy iOS App](https://apps.apple.com/br/app/twilio-authy/id494168017) using [**MITMProxy** (Man-in-the-Middle proxy)](https://www.mitmproxy.org/). [Authy](https://apps.apple.com/br/app/twilio-authy/id494168017) is a popular two-factor authentication (2FA) app that provides an additional layer of security for your online accounts. However, it does not provide a built-in way to export or backup your tokens. Also, since the [Authy Desktop App was discontinued](https://help.twilio.com/articles/22771146070299-User-guide-End-of-Life-EOL-for-Twilio-Authy-Desktop-app), exporting tokens from the Authy Desktop App is no longer an option.  
 So, by using MITMProxy, it enables you to capture HTTPS traffic, extract encrypted tokens, and decrypt them to obtain authenticator seeds.
-In a short way, you install MITMProxy, set manually the proxy on your iOS device to be the MITMProxy installed on your computer, so, when you log-out and log back in, as your computer is the proxy for your iOS device, it will capture the HTTPS traffic from the Authy app, which contains your authenticator tokens file (`authenticator_tokens.json`) in encrypted form. After that, you can decrypt the tokens using a Python script and your backup password, which will give you access to your authenticator Time-based One-Time Password (TOTP) Uniform Resource Identifier (URI) for many Authenticator apps, such as [2FA](https://apps.apple.com/us/app/2fa-authenticator-2fas/id1217793794), [Aegis](https://getaegis.app/), [Google Authenticator](https://apps.apple.com/us/app/google-authenticator/id388497605), and [Microsoft Authenticator](https://www.microsoft.com/en/security/mobile-authenticator-app). With those URI, you can import your tokens into any of those apps, or scan the generated QR codes for them.
+In a short way, you install MITMProxy, set manually the proxy on your iOS device to be the MITMProxy installed on your computer, so, when you log-out and log back in, as your computer is the proxy for your iOS device, it will capture the HTTPS traffic from the Authy app, which contains your authenticator tokens file (`authenticator_tokens.json`) in encrypted form. After that, you can decrypt the tokens using a Python script and your backup password, which will give you access to your authenticator Time-based One-Time Password (TOTP) Uniform Resource Identifier (URI) for many Authenticator apps, such as [2FA](https://apps.apple.com/us/app/2fa-authenticator-2fas/id1217793794), [Aegis](https://getaegis.app/), [Google Authenticator](https://apps.apple.com/us/app/google-authenticator/id388497605), and [Microsoft Authenticator](https://www.microsoft.com/en/security/mobile-authenticator-app). With those URIs, you can import your tokens into any of those apps, or scan the generated QR codes for them. **Proton Authenticator** is now supported, but it requires a special JSON format for import, which is automatically generated as `proton_authenticator.json` by the script. See below for details.
 
 > [!NOTE]
 > You can also store the TOTP URIs in a password manager that supports TOTP, such as [Bitwarden](https://bitwarden.com/help/integrated-authenticator/). BitWarden, inside each login, there is a field below the password field called "Authenticator Key (TOTP)", where you can paste the TOTP URI, and BitWarden will automatically generate the TOTP codes for you. Unfortunately, to actually view the 30-second codes, you need a BitWarden Premium subscription, but this is a good option to store your TOTP URIs securely for backup purposes, rather than storing them in a text file or a JSON file, which is not secure.
@@ -200,7 +201,31 @@ After that, inside the repository folder, copy the `.env-example` file to a new 
 Assuming you i've installed all of the requirements in the previous step, you can now decrypt your tokens.
 Inside the repository folder, ensure you have the `authenticator_tokens.json` file you downloaded in Step 2 is in the same folder as the scripts (i.e., the root of the repository, `Authy-iOS-MiTM`). After that, run `make`, which will run the `main.py` script that will call all of the three scripts (`authenticador_tokens.py`, `generate_uris.py`, and `generate_qr_codes.py`) to decrypt your tokens, generate URIs for them (saved in the `URIs.txt` and `URIs.json` files), and optionally generate QR codes for them.
 
-The script will prompt you for your backup password if you didn't create the `.env` file, which does not show in the terminal for privacy reasons. After entering your password and hitting Enter, you should have a `decrypted_tokens.json` file, which contains the decrypted authenticator seeds from your Authy account. Please note that this JSON file is not in a standard format that you can import to other authenticator apps. The file that you can import to other authenticator apps is the `URIs.json` file, which contains the URIs for each of your tokens in a format that is compatible with the authenticator app that you choose during the `generate_uris.py` script execution (`Select an authenticator app to generate URIs for: (1. 2FA, 2. Aegis, 3. Google Authenticator, 4. Microsoft Authenticator`).
+The script will prompt you for your backup password if you didn't create the `.env` file, which does not show in the terminal for privacy reasons. After entering your password and hitting Enter, you should have a `decrypted_tokens.json` file, which contains the decrypted authenticator seeds from your Authy account. Please note that this JSON file is not in a standard format that you can import to other authenticator apps. The file that you can import to other authenticator apps is the `URIs.json` file, which contains the URIs for each of your tokens in a format that is compatible with the authenticator app that you choose during the `generate_uris.py` script execution (`Select an authenticator app to generate URIs for: (1. 2FA, 2. Aegis, 3. Google Authenticator, 4. Microsoft Authenticator, 5. Proton Authenticator`).
+
+### Proton Authenticator support
+
+**Proton Authenticator** requires a specific JSON format for bulk import, which is different from the standard `URIs.json` file. When you select Proton Authenticator in the script, it will generate a file named `proton_authenticator.json` with the required format:
+
+```json
+{
+  "version": 1,
+  "entries": [
+    {
+      "id": "...",
+      "content": {
+        "uri": "otpauth://totp/Adobe?secret=...&digits=6&algorithm=SHA1&period=30&issuer=",
+        "entry_type": "Totp",
+        "name": "Adobe"
+      },
+      "note": null
+    },
+    ...
+  ]
+}
+```
+
+This file can be imported directly into Proton Authenticator. The script will automatically create this file for you if you select Proton Authenticator as your target app. Other apps use the standard `URIs.json` and `URIs.txt` files.
 
 > [!NOTE]
 > If you see "Decryption failed: Invalid padding length" as the decrypted_seed in your JSON file, you entered an incorrect backup password. Run the script again with the correct backup password.
