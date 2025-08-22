@@ -1,4 +1,5 @@
 import json # For handling JSON data
+import urllib.parse # For URL encoding
 from collections import defaultdict # For counting occurrences of names
 from main import BackgroundColors, Style, verbose_output # Importing necessary functions and constants from main.py
 
@@ -74,14 +75,19 @@ def convert_to_uris(json_data, app_choice):
       uri_format = URI_FORMATS.get(app_choice) # Get the URI format based on the app choice
 
       for token in tokens: # Iterate through each token in the decrypted tokens
-         name = token.get("name").replace(":", " ").replace("_", " ") if token.get("name") else "" # Get the name from the token, replacing ":" and "_" with spaces
+         name = token.get("name").replace(":", " ").replace("_", " ").strip() if token.get("name") else "" # Get the name from the token, replacing ":" and "_" with spaces and stripping whitespace
          name = " ".join(word.capitalize() for word in name.split(" ")) if CAPITALIZE_NAME else name # Capitalize each word in the name if CAPITALIZE_NAME is True
          issuer = token.get("issuer").replace("_", " ") if token.get("issuer") else "" # Replace underscores in the issuer with spaces, if issuer exists
          secret = token.get("decrypted_seed") # Get the decrypted seed from the token
          digits = token.get("digits", 6) # Get the number of digits, defaulting to 6 if not specified
 
+         encoded_name = urllib.parse.quote(name, safe="") # URL encode the name. For example, spaces become %20
+         encoded_issuer = urllib.parse.quote(issuer, safe="") # URL encode the issuer
+         encoded_secret = urllib.parse.quote(secret, safe="") if secret else "" # URL encode the secret if it exists
+         encoded_digits = urllib.parse.quote(str(digits), safe="") # URL encode the digits
+
          if name and secret and uri_format: # If name, secret, and uri_format are available
-            uri = uri_format.format(name=name, secret=secret, digits=digits, issuer=issuer) # Format the URI using the provided values
+            uri = uri_format.format(name=encoded_name, issuer=encoded_issuer, secret=encoded_secret, digits=encoded_digits)
             uris.append(uri) # Append the generated URI to the list
             names.append(token.get("name")) # Append the name to the names list
 
