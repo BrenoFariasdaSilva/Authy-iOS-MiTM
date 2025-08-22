@@ -101,11 +101,11 @@ def convert_to_uris(json_data, app_choice):
 
 def extract_uri_name(uri: str) -> str:
    """
-   Extracts the part after "totp/" and before "?secret", replaces "_" with spaces,
+   Extracts the part after "totp/" and before "?secret", and decodes URL encoding.
    removes "/", capitalizes words, and removes extra spaces.
 
    :param uri: The URI string to extract the name from
-   :return: Cleaned name extracted from the URI
+   :return: Decoded and cleaned name string
    """
 
    verbose_output(f"{BackgroundColors.GREEN}Extracting name from URI: {BackgroundColors.CYAN}{uri}{Style.RESET_ALL}") # Output the extraction message
@@ -120,10 +120,11 @@ def extract_uri_name(uri: str) -> str:
       return "Unknown" # Return "Unknown" if "?secret" is not found
 
    raw_name = uri[start:end] # Extract raw name
-   cleaned = raw_name.replace("_", " ").replace("/", " ") # Replace "_" with spaces and remove "/"
-   cleaned = " ".join(cleaned.split()) # Remove extra spaces
+   decoded_name = urllib.parse.unquote(raw_name) # Decode URL encoding
+   cleaned_decoded = decoded_name.replace("_", " ").replace("/", " ") # Replace "_" with spaces and remove "/"
+   cleaned_decoded = " ".join(cleaned_decoded.split()) # Remove extra spaces
 
-   return cleaned # Return the cleaned name
+   return cleaned_decoded # Return the cleaned and decoded name
 
 
 def normalize_name(name: str) -> str:
