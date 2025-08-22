@@ -7,10 +7,10 @@ SHOW_IN_TERMINAL = False # Flag to control whether to show URIs in the terminal
 CAPITALIZE_NAME = True # Flag to control whether to capitalize names in the URIs
 
 URI_FORMATS = { # Dictionary of URI formats for different authenticator apps
+   "2FA": "otpauth://totp/{name}?secret={secret}&digits={digits}&algorithm=SHA1&period=30&issuer={issuer}",
    "Aegis": "otpauth://totp/{name}?secret={secret}&digits={digits}&algorithm=SHA1&period=30&issuer={issuer}",
    "Google Authenticator": "otpauth://totp/{issuer}:{name}?secret={secret}&digits={digits}&algorithm=SHA1&period=30",
    "Microsoft Authenticator": "otpauth://totp/{issuer}:{name}?secret={secret}&digits={digits}&algorithm=SHA1&period=30",
-   "2FA": "otpauth://totp/{name}?secret={secret}&digits={digits}&algorithm=SHA1&period=30&issuer={issuer}",
 }
 
 def get_app_choice():
