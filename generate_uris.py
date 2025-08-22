@@ -74,9 +74,9 @@ def convert_to_uris(json_data, app_choice):
       uri_format = URI_FORMATS.get(app_choice) # Get the URI format based on the app choice
 
       for token in tokens: # Iterate through each token in the decrypted tokens
-         name = token.get("name").replace(":", "_").replace(" ", "_") # Replace ":" and spaces in the name with underscores
-         name = " ".join(word.capitalize() for word in name.split("_")) if CAPITALIZE_NAME else name # Capitalize each word in the name if CAPITALIZE_NAME is True
-         issuer = token.get("issuer").replace(" ", "_") if token.get("issuer") else "" # Replace spaces in the issuer with underscores, if issuer exists
+         name = token.get("name").replace(":", " ").replace("_", " ") if token.get("name") else "" # Get the name from the token, replacing ":" and "_" with spaces
+         name = " ".join(word.capitalize() for word in name.split(" ")) if CAPITALIZE_NAME else name # Capitalize each word in the name if CAPITALIZE_NAME is True
+         issuer = token.get("issuer").replace("_", " ") if token.get("issuer") else "" # Replace underscores in the issuer with spaces, if issuer exists
          secret = token.get("decrypted_seed") # Get the decrypted seed from the token
          digits = token.get("digits", 6) # Get the number of digits, defaulting to 6 if not specified
 
