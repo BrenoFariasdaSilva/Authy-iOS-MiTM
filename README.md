@@ -43,6 +43,7 @@ It took a lot of work to make this fork, so I hope you enjoy it and find it usef
   - [Setup](#setup)
     - [Step 1: Setting up mitmproxy](#step-1-setting-up-mitmproxy)
       - [Installing the mitmproxy root certificate on iOS](#installing-the-mitmproxy-root-certificate-on-ios)
+      - [Troubleshooting / Alternative Method](#troubleshooting--alternative-method)
     - [Step 2: Dumping tokens](#step-2-dumping-tokens)
       - [How to find the correct packet in mitmweb](#how-to-find-the-correct-packet-in-mitmweb)
     - [Step 3: Setting Up Requirements](#step-3-setting-up-requirements)
@@ -127,6 +128,46 @@ At this point, the profile is downloaded but **not yet installed**.
 **⚠ Important:** Failure to install the profile via **VPN & Device Management** and then enable full trust in **Certificate Trust Settings** will cause Authy to fail with an SSL validation error.
 
 At this point, you have completed the process of setting up mitmproxy to capture HTTPS traffic from your iOS device. Keep the proxy connected for the next step, which is dumping tokens received from the Authy iOS app.
+
+### Troubleshooting / Alternative Method
+
+Some users reported issues where mitmproxy didn’t capture traffic correctly, or where Authy failed with integrity/SSL errors.  
+If you face this, try the following sequence (thanks to **fpwex9** for sharing a working setup on macOS + iOS in [here]( https://gist.github.com/gboudreau/94bb0c11a6209c82418d01a59d958c93?permalink_comment_id=5761814#gistcomment-5761814)):
+
+**1. File descriptor limit (macOS only)**  
+If mitmproxy complains about “too many open files”, increase the limit before starting it:
+
+```bash
+sudo launchctl limit maxfiles 65536 200000
+ulimit -n 65536
+```
+
+**2. Start mitmproxy with limited interception (Command 1):**
+
+```bash
+mitmweb --allow-hosts "api.authy.com"
+```
+
+At this stage, you should be able to open the Authy client, enter your phone number, and send the confirmation request to your second device. The Flow List may still be empty at this point.
+
+**3. Switch to full interception (Command 2):**
+
+```bash
+mitmweb --listen-host 0.0.0.0 --listen-port 8080
+```
+
+⚠️ Starting directly with this command may cause an “Integrity check” error in Authy.  
+Instead, use this sequence:
+
+- Start with **Command 1**.  
+- Launch Authy, enter your phone number, and send the confirmation request.  
+- **Before confirming on the second device**, stop mitmproxy and restart it with **Command 2**.  
+- Confirm on the second device.  
+- Authy should authorize successfully, and mitmproxy will capture the required data.
+
+💡 Tip: You may need to retry 2–3 times with slightly different timing before it works. Be patient.
+
+---
 
 ### Step 2: Dumping tokens
 
