@@ -255,7 +255,8 @@ def decrypt_all_tokens(tokens: list, backup_password: str) -> list:
    for i, token in enumerate(tokens): # Iterate over each token in the list
       verbose_output(f"\n{BackgroundColors.GREEN}DEBUG: Token {i+1} data: {BackgroundColors.CYAN}{json.dumps(token, indent=4)}{Style.RESET_ALL}")
 
-      unique_iv = token.get("unique_iv", "00000000000000000000000000000000") # Use default IV if not present
+      unique_iv = token.get("unique_iv")
+      if unique_iv is None: unique_iv = "00000000000000000000000000000000" # Use default IV if not present
 
       decrypted_seed = decrypt_token( # Decrypt token seed
          kdf_rounds=token["key_derivation_iterations"], # Number of key derivation iterations
