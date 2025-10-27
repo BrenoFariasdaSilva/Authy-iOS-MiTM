@@ -40,17 +40,31 @@ It took a lot of work to make this fork, so I hope you enjoy it and find it usef
   - [Table of Contents](#table-of-contents)
   - [Introduction](#introduction)
   - [Requirements](#requirements)
-  - [Quick start (clone + setup)](#quick-start-clone--setup)
-  - [Setup](#setup)
-    - [Step 1: Clone and open the repository](#step-1-clone-and-open-the-repository)
-    - [Step 2: Setting up mitmproxy](#step-2-setting-up-mitmproxy)
+  - [Repository Setup](#repository-setup)
+    - [1. Install Python](#1-install-python)
+      - [Linux](#linux)
+      - [macOS](#macos)
+      - [Windows](#windows)
+    - [2. Install `make` utility](#2-install-make-utility)
+      - [Linux](#linux-1)
+      - [macOS](#macos-1)
+      - [Windows](#windows-1)
+    - [3. Clone the repository](#3-clone-the-repository)
+    - [4. Virtual environment (Strongly Recommended)](#4-virtual-environment-strongly-recommended)
+    - [5. Install dependencies](#5-install-dependencies)
+  - [Setting up and Using the Project](#setting-up-and-using-the-project)
+    - [Step 1: Setting up mitmproxy](#step-1-setting-up-mitmproxy)
       - [Installing the mitmproxy root certificate on iOS](#installing-the-mitmproxy-root-certificate-on-ios)
     - [Troubleshooting / Alternative Method](#troubleshooting--alternative-method)
-    - [Step 3: Dumping tokens](#step-3-dumping-tokens)
+    - [Step 2: Dumping tokens](#step-2-dumping-tokens)
       - [How to find the correct packet in mitmweb](#how-to-find-the-correct-packet-in-mitmweb)
-    - [Step 4: Setting Up Requirements](#step-4-setting-up-requirements)
-    - [Step 5: Decrypting tokens](#step-5-decrypting-tokens)
+    - [Step 3: Setting Up Requirements](#step-3-setting-up-requirements)
+    - [Step 4: Decrypting tokens](#step-4-decrypting-tokens)
     - [Proton Authenticator support](#proton-authenticator-support)
+  - [Troubleshooting / Alternative Method](#troubleshooting--alternative-method-1)
+    - [QR Generation Issues on Windows](#qr-generation-issues-on-windows)
+    - [About `URIs.json`](#about-urisjson)
+    - [Cleaning the Project](#cleaning-the-project)
   - [Compatibility note](#compatibility-note)
   - [Other info](#other-info)
   - [Contributing](#contributing)
@@ -82,26 +96,145 @@ In a short way, you install MITMProxy, set manually the proxy on your iOS device
 
 ---
 
-## Quick start (clone + setup)
+## Repository Setup
 
+Before running the project, ensure that both **Python** and the **make utility** are installed on your system. Follow the instructions below according to your operating system.
 
+### 1. Install Python
 
----
+The project requires **Python 3.9 or higher**.
 
----
-
-## Setup
-
-### Step 1: Clone and open the repository
-
-Open a terminal and run:
+#### Linux
+On Debian/Ubuntu-based distributions:
 
 ```bash
-git clone https://github.com/BrenoFariasdaSilva/Authy-iOS-MiTM.git
-cd Authy-iOS-MiTM
+sudo apt update
+sudo apt install python3 python3-venv python3-pip -y
 ```
 
-### Step 2: Setting up mitmproxy
+On Fedora/RHEL-based distributions:
+
+```bash
+sudo dnf install python3 python3-venv python3-pip -y
+```
+
+Verify installation:
+
+```bash
+python3 --version
+```
+
+#### macOS
+1. Install via Homebrew (recommended):
+
+```bash
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" # if Homebrew not installed
+brew install python
+```
+
+2. Verify installation:
+
+```bash
+python3 --version
+```
+
+#### Windows
+1. Download Python from the official website: [https://www.python.org/downloads/windows/](https://www.python.org/downloads/windows/)
+2. Run the installer and check **“Add Python to PATH”**.
+3. Verify installation:
+
+```powershell
+python --version
+```
+
+---
+
+### 2. Install `make` utility
+
+The `make` utility is used to automate tasks such as setting up the virtual environment and installing dependencies.
+
+#### Linux
+`make` is usually pre-installed. If not:
+
+```bash
+sudo apt install build-essential -y  # Debian/Ubuntu
+sudo dnf install make -y            # Fedora/RHEL
+make --version
+```
+
+#### macOS
+`make` comes pre-installed with Xcode Command Line Tools:
+
+```bash
+xcode-select --install
+make --version
+```
+
+#### Windows
+1. Install via [Chocolatey](https://chocolatey.org/):
+
+```powershell
+choco install make
+```
+
+Or, install [GnuWin32 Make](http://gnuwin32.sourceforge.net/packages/make.htm).
+
+2. Verify installation:
+
+```powershell
+make --version
+```
+
+---
+
+### 3. Clone the repository
+
+1. Clone the repository with the following command:
+
+   ```bash
+   git clone https://github.com/BrenoFariasDaSilva/DDoS-Detector.git
+   cd DDoS-Detector
+   ```
+
+### 4. Virtual environment (Strongly Recommended)
+
+With `make`:
+
+```bash
+make venv
+source venv/bin/activate # Linux/macOS
+venv\Scripts\activate # Windows
+```
+
+Or manually:
+
+```bash
+python -m venv venv
+source venv/bin/activate # Linux/macOS
+venv\Scripts\activate # Windows
+```
+
+### 5. Install dependencies
+
+1. Install Python packages:
+
+With `make`:
+
+```bash
+make dependencies
+```
+
+Or manually:
+
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+## Setting up and Using the Project
+
+### Step 1: Setting up mitmproxy
 
 Extracting tokens works by capturing HTTPS traffic received by the Authy app after logging in. This traffic contains your tokens in encrypted form, which is then decrypted in a later step so that you can access your authenticator seeds. In order to receive this traffic, we use mitmproxy, which is an easy-to-use tool that allows you to intercept traffic from apps and websites on your device.
 
@@ -145,7 +278,7 @@ At this point, the profile is downloaded but **not yet installed**.
 
 ---
 
-**⚠ Important:** Failure to install the profile via **VPN & Device Management** and then enable full trust in **Certificate Trust Settings** will cause Authy to fail with an SSL validation error.
+**Important:** Failure to install the profile via **VPN & Device Management** and then enable full trust in **Certificate Trust Settings** will cause Authy to fail with an SSL validation error.
 
 At this point, you have completed the process of setting up mitmproxy to capture HTTPS traffic from your iOS device. Keep the proxy connected for the next step, which is dumping tokens received from the Authy iOS app.
 
@@ -176,7 +309,7 @@ At this stage, you should be able to open the Authy client, enter your phone num
 mitmweb --listen-host 0.0.0.0 --listen-port 8080
 ```
 
-⚠️ Starting directly with this command may cause an “Integrity check” error in Authy.  
+Starting directly with this command may cause an “Integrity check” error in Authy.  
 Instead, use this sequence:
 
 - Start with **Command 1**.  
@@ -189,7 +322,7 @@ Instead, use this sequence:
 
 ---
 
-### Step 3: Dumping tokens
+### Step 2: Dumping tokens
 
 > [!NOTE]
 > In order for this to work, you must have your Authy tokens synced to the cloud and you must have a backup password set. It is recommended to dump tokens with a secondary device in case something goes wrong.
@@ -243,8 +376,7 @@ We strongly recommend renaming this file to authenticator_tokens.json, but if yo
 
 After that, disconnect your device from the proxy (select "Off" in Settings → Wi-Fi → (your network) → Configure Proxy) before exiting mitmweb (Ctrl+C in the terminal) and continuing to the next step.
 
-
-### Step 4: Setting Up Requirements
+### Step 3: Setting Up Requirements
 
 Before decrypting your tokens, you need install all of the other requirements. 
 First, you must ensure you have [Python 3.13.1+](https://www.python.org) installed on your computer. After that, verify that you have `Make` installed on your computer (it comes pre-installed on Linux and Mac, but Windows users can install it via [Chocolatey](https://chocolatey.org/install) with `choco install make`), then run `make dependencies` to set up a Python virtual environment and install the required dependencies. If you don't have `Make` installed, you can manually set up a Python virtual environment and install the dependencies by following these steps:
@@ -257,7 +389,7 @@ First, you must ensure you have [Python 3.13.1+](https://www.python.org) install
 
 After that, inside the repository folder, copy the `.env-example` file to a new file named `.env` and open it in a text editor. Replace `YOUR_AUTHY_BACKUP_PASSWORD_HERE` with your actual Authy backup password, then save and close the file.
 
-### Step 5: Decrypting tokens
+### Step 4: Decrypting tokens
 
 Assuming you i've installed all of the requirements in the previous step, you can now decrypt your tokens.
 Inside the repository folder, ensure you have the `authenticator_tokens.json` file you downloaded in Step 2 is in the same folder as the scripts (i.e., the root of the repository, `Authy-iOS-MiTM`). After that, run `make`, which will run the `main.py` script that will call all of the three scripts (`authenticador_tokens.py`, `generate_uris.py`, and `generate_qr_codes.py`) to decrypt your tokens, generate URIs for them (saved in the `URIs.txt` and `URIs.json` files), and optionally generate QR codes for them.
@@ -292,6 +424,57 @@ This file can be imported directly into Proton Authenticator. The script will au
 > If you see "Decryption failed: Invalid padding length" as the decrypted_seed in your JSON file, you entered an incorrect backup password. Run the script again with the correct backup password.
 
 ---
+
+## Troubleshooting / Alternative Method
+
+### QR Generation Issues on Windows
+
+Some users have reported that generated QR files may:
+- Use incorrect extensions (e.g., `.wav` instead of `.png`);
+- Contain invalid filenames or fail to save properly.
+
+To resolve or prevent these issues:
+
+1. Ensure `Pillow` and `qrcode` were installed successfully inside the virtual environment.
+2. Avoid special or reserved Windows filenames (e.g., `CON`, `PRN`, `AUX`, etc.).
+3. If encoding issues persist, try running the QR generation script from a **POSIX-like environment** such as:
+  - **WSL (Windows Subsystem for Linux)**
+  - **Git Bash**
+  - **macOS/Linux**
+4. As a fallback, use the `URIs.json` file — it contains all **otpauth URIs** your authenticator app can import directly.
+  - Most apps (Google Authenticator, Authy, Bitwarden, etc.) support importing from URIs.
+  - Alternatively, use an external QR generator that accepts **otpauth URIs**.
+
+---
+
+### About `URIs.json`
+
+The `URIs.json` file serves as a direct backup of all generated **TOTP URIs**.  
+If QR generation fails, you can still:
+
+- Import `URIs.json` directly into your preferred authenticator app; or  
+- Use an online/offline QR generator that accepts **otpauth://** URIs to recreate the QR codes.
+
+---
+
+### Cleaning the Project
+
+If you encounter environment or dependency issues, you can safely clean and rebuild everything:
+
+```bash
+# Remove the virtual environment and temporary files (PowerShell)
+Remove-Item -Recurse -Force .\venv
+Get-ChildItem -Recurse -Filter *.pyc | Remove-Item -Force
+Get-ChildItem -Recurse -Directory -Filter __pycache__ | Remove-Item -Recurse -Force
+
+# Recreate the environment
+python -m venv venv
+.\venv\Scripts\Activate.ps1
+python -m pip install --upgrade pip setuptools wheel
+pip install -r requirements.txt
+```
+
+This ensures a clean setup equivalent to running `make clean && make`.
 
 ## Compatibility note
 
