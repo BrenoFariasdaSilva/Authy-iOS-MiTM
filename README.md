@@ -40,14 +40,16 @@ It took a lot of work to make this fork, so I hope you enjoy it and find it usef
   - [Table of Contents](#table-of-contents)
   - [Introduction](#introduction)
   - [Requirements](#requirements)
+  - [Quick start (clone + setup)](#quick-start-clone--setup)
   - [Setup](#setup)
-    - [Step 1: Setting up mitmproxy](#step-1-setting-up-mitmproxy)
+    - [Step 1: Clone and open the repository](#step-1-clone-and-open-the-repository)
+    - [Step 2: Setting up mitmproxy](#step-2-setting-up-mitmproxy)
       - [Installing the mitmproxy root certificate on iOS](#installing-the-mitmproxy-root-certificate-on-ios)
-      - [Troubleshooting / Alternative Method](#troubleshooting--alternative-method)
-    - [Step 2: Dumping tokens](#step-2-dumping-tokens)
+    - [Troubleshooting / Alternative Method](#troubleshooting--alternative-method)
+    - [Step 3: Dumping tokens](#step-3-dumping-tokens)
       - [How to find the correct packet in mitmweb](#how-to-find-the-correct-packet-in-mitmweb)
-    - [Step 3: Setting Up Requirements](#step-3-setting-up-requirements)
-    - [Step 4: Decrypting tokens](#step-4-decrypting-tokens)
+    - [Step 4: Setting Up Requirements](#step-4-setting-up-requirements)
+    - [Step 5: Decrypting tokens](#step-5-decrypting-tokens)
     - [Proton Authenticator support](#proton-authenticator-support)
   - [Compatibility note](#compatibility-note)
   - [Other info](#other-info)
@@ -76,12 +78,30 @@ In a short way, you install MITMProxy, set manually the proxy on your iOS device
 - [mitmproxy](https://www.mitmproxy.org) installed on your computer
 - [Python 3.13.1+](https://www.python.org) installed on your computer
 - [Make](https://www.gnu.org/software/make/) installed on your computer (optional, but strongly recommended to simplify setup and usage)
+- **Windows-specific:** Microsoft Visual C++ Build Tools (part of "Build Tools for Visual Studio") — required by some Python packages that need compilation.
+
+---
+
+## Quick start (clone + setup)
+
+
+
+---
 
 ---
 
 ## Setup
 
-### Step 1: Setting up mitmproxy
+### Step 1: Clone and open the repository
+
+Open a terminal and run:
+
+```bash
+git clone https://github.com/BrenoFariasdaSilva/Authy-iOS-MiTM.git
+cd Authy-iOS-MiTM
+```
+
+### Step 2: Setting up mitmproxy
 
 Extracting tokens works by capturing HTTPS traffic received by the Authy app after logging in. This traffic contains your tokens in encrypted form, which is then decrypted in a later step so that you can access your authenticator seeds. In order to receive this traffic, we use mitmproxy, which is an easy-to-use tool that allows you to intercept traffic from apps and websites on your device.
 
@@ -169,7 +189,7 @@ Instead, use this sequence:
 
 ---
 
-### Step 2: Dumping tokens
+### Step 3: Dumping tokens
 
 > [!NOTE]
 > In order for this to work, you must have your Authy tokens synced to the cloud and you must have a backup password set. It is recommended to dump tokens with a secondary device in case something goes wrong.
@@ -224,7 +244,7 @@ We strongly recommend renaming this file to authenticator_tokens.json, but if yo
 After that, disconnect your device from the proxy (select "Off" in Settings → Wi-Fi → (your network) → Configure Proxy) before exiting mitmweb (Ctrl+C in the terminal) and continuing to the next step.
 
 
-### Step 3: Setting Up Requirements
+### Step 4: Setting Up Requirements
 
 Before decrypting your tokens, you need install all of the other requirements. 
 First, you must ensure you have [Python 3.13.1+](https://www.python.org) installed on your computer. After that, verify that you have `Make` installed on your computer (it comes pre-installed on Linux and Mac, but Windows users can install it via [Chocolatey](https://chocolatey.org/install) with `choco install make`), then run `make dependencies` to set up a Python virtual environment and install the required dependencies. If you don't have `Make` installed, you can manually set up a Python virtual environment and install the dependencies by following these steps:
@@ -237,7 +257,7 @@ First, you must ensure you have [Python 3.13.1+](https://www.python.org) install
 
 After that, inside the repository folder, copy the `.env-example` file to a new file named `.env` and open it in a text editor. Replace `YOUR_AUTHY_BACKUP_PASSWORD_HERE` with your actual Authy backup password, then save and close the file.
 
-### Step 4: Decrypting tokens
+### Step 5: Decrypting tokens
 
 Assuming you i've installed all of the requirements in the previous step, you can now decrypt your tokens.
 Inside the repository folder, ensure you have the `authenticator_tokens.json` file you downloaded in Step 2 is in the same folder as the scripts (i.e., the root of the repository, `Authy-iOS-MiTM`). After that, run `make`, which will run the `main.py` script that will call all of the three scripts (`authenticador_tokens.py`, `generate_uris.py`, and `generate_qr_codes.py`) to decrypt your tokens, generate URIs for them (saved in the `URIs.txt` and `URIs.json` files), and optionally generate QR codes for them.
