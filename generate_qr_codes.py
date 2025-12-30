@@ -1,6 +1,7 @@
 import json # For reading and writing JSON files
 import os # For file and directory operations
 import qrcode # For generating QR codes
+import re
 from main import BackgroundColors, Style, verbose_output, verify_filepath_exists # Importing necessary functions and constants from main.py
 from tqdm import tqdm # For displaying a progress bar
 
@@ -58,6 +59,11 @@ def generate_qr_code(uri, filename):
    img = qrcode.make(uri) # Generate QR code
    img.save(filename) # Save the QR code image to the specified file
 
+def sanitize_filename(filename):
+   # This regex removes characters that are illegal in Windows/macOS/Linux
+   # Illegal: < > : " / \ | ? *
+   return re.sub(r'[<>:"/\\|?*]', '_', filename)
+
 
 def generate_qr_codes_for_uris(uris_data: dict, folder_name: str):
    """
@@ -68,7 +74,7 @@ def generate_qr_codes_for_uris(uris_data: dict, folder_name: str):
    """
 
    for item in tqdm(uris_data["URIs"], desc=f"{BackgroundColors.CYAN}Generating QR Codes{BackgroundColors.GREEN}", unit="QR"): # Loop through each URI in the data
-      name = item["name"].rstrip(".") # Get the name for the QR code and remove trailing dot
+      name = sanitize_filename(item["name"].rstrip(".")) # Get the name for the QR code and remove trailing dot
       uri = item["uri"] # Get the URI to encode in the QR code
       filename = os.path.join(folder_name, f"{name}.png") # Construct filename
       generate_qr_code(uri, filename) # Generate and save the QR code
