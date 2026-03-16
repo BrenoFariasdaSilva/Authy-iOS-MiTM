@@ -25,7 +25,7 @@ It took a lot of work to make this fork, so I hope you enjoy it and find it usef
 ![GitHub Code Size in Bytes Badge](https://img.shields.io/github/languages/code-size/BrenoFariasdaSilva/Authy-iOS-MiTM)
 ![GitHub Last Commit Badge](https://img.shields.io/github/last-commit/BrenoFariasdaSilva/Authy-iOS-MiTM)
 ![GitHub License Badge](https://img.shields.io/github/license/BrenoFariasdaSilva/Authy-iOS-MiTM)
-![Wakatime Badge](https://wakatime.com/badge/github/BrenoFariasdaSilva/Authy-iOS-MiTM.svg)
+[![wakatime](https://wakatime.com/badge/user/28f6c354-43b3-4634-8ec1-631893fe27d0/project/2ebf4779-d642-42e8-b6ea-15c460d24085.svg)](https://wakatime.com/badge/user/28f6c354-43b3-4634-8ec1-631893fe27d0/project/2ebf4779-d642-42e8-b6ea-15c460d24085)
 
 </div>
 
