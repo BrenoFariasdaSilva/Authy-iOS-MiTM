@@ -192,8 +192,8 @@ make --version
 1. Clone the repository with the following command:
 
    ```bash
-   git clone https://github.com/BrenoFariasDaSilva/DDoS-Detector.git
-   cd DDoS-Detector
+   git clone https://github.com/BrenoFariasDaSilva/Authy-iOS-MiTM.git
+   cd Authy-iOS-MiTM
    ```
 
 ### 4. Virtual environment (Strongly Recommended)
