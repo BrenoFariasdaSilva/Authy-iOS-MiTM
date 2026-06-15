@@ -69,7 +69,7 @@ It took a lot of work to make this fork, so I hope you enjoy it and find it usef
   - [Other info](#other-info)
   - [Contributing](#contributing)
   - [License](#license)
-    - [MIT License](#mit-license)
+    - [Apache License 2.0](#apache-license-20)
 
 ## Introduction
 
@@ -496,6 +496,6 @@ The guide for contributing is in the [CONTRIBUTING.md](CONTRIBUTING.md) file. If
 
 ## License
 
-### MIT License
+### Apache License 2.0
 
-This project is licensed under the [MIT License](LICENSE).
+This project is licensed under the [Apache License 2.0](LICENSE). This license permits use, modification, distribution, and sublicense of the code for both private and commercial purposes, provided that the original copyright notice and a disclaimer of warranty are included in all copies or substantial portions of the software. It also requires a clear attribution back to the original author(s) of the repository. For more details, see the [LICENSE](LICENSE) file in this repository.
