@@ -34,7 +34,6 @@ Features simplified setup, virtual environment support, improved code structure,
 [![GitHub Commits](https://img.shields.io/github/commit-activity/t/BrenoFariasdaSilva/Authy-iOS-MiTM/main)](https://github.com/BrenoFariasdaSilva/Authy-iOS-MiTM/commits/main)
 ![GitHub Language Count](https://img.shields.io/github/languages/count/BrenoFariasdaSilva/Authy-iOS-MiTM)
 [![GitHub Created At](https://img.shields.io/github/created-at/BrenoFariasdaSilva/Authy-iOS-MiTM)](https://github.com/BrenoFariasdaSilva/Authy-iOS-MiTM)
-[![GitHub Repository Size](https://img.shields.io/github/repo-size/BrenoFariasdaSilva/Authy-iOS-MiTM)](https://github.com/BrenoFariasdaSilva/Authy-iOS-MiTM)
 [![Closed Issues](https://img.shields.io/github/issues-closed/BrenoFariasdaSilva/Authy-iOS-MiTM)](https://github.com/BrenoFariasdaSilva/Authy-iOS-MiTM/issues?q=is%3Aissue+is%3Aclosed)
 [![Closed Pull Requests](https://img.shields.io/github/issues-pr-closed/BrenoFariasdaSilva/Authy-iOS-MiTM)](https://github.com/BrenoFariasdaSilva/Authy-iOS-MiTM/pulls?q=is%3Apr+is%3Aclosed)
 [![Monthly Commits](https://img.shields.io/github/commit-activity/m/BrenoFariasdaSilva/Authy-iOS-MiTM/main)](https://github.com/BrenoFariasdaSilva/Authy-iOS-MiTM/commits)
