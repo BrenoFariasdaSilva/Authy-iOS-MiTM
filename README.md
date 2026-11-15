@@ -20,14 +20,23 @@ It took a lot of work to make this fork, so I hope you enjoy it and find it usef
 
 </div>
 
+
 <div align="center">
 
-![GitHub Code Size in Bytes Badge](https://img.shields.io/github/languages/code-size/BrenoFariasdaSilva/Authy-iOS-MiTM)
-![GitHub Last Commit Badge](https://img.shields.io/github/last-commit/BrenoFariasdaSilva/Authy-iOS-MiTM)
-![GitHub License Badge](https://img.shields.io/github/license/BrenoFariasdaSilva/Authy-iOS-MiTM)
-![Wakatime Badge](https://wakatime.com/badge/github/BrenoFariasdaSilva/Authy-iOS-MiTM.svg)
+![GitHub Code Size in Bytes](https://img.shields.io/github/languages/code-size/BrenoFariasdaSilva/Authy-iOS-MiTM)
+[![GitHub Stars](https://img.shields.io/github/stars/BrenoFariasdaSilva/Authy-iOS-MiTM)](https://github.com/BrenoFariasdaSilva/Authy-iOS-MiTM/stargazers)
+[![GitHub Forks](https://img.shields.io/github/forks/BrenoFariasdaSilva/Authy-iOS-MiTM)](https://github.com/BrenoFariasdaSilva/Authy-iOS-MiTM/network/members)
+[![GitHub Contributors](https://img.shields.io/github/contributors/BrenoFariasdaSilva/Authy-iOS-MiTM)](https://github.com/BrenoFariasdaSilva/Authy-iOS-MiTM/graphs/contributors)
+[![GitHub Issues](https://img.shields.io/github/issues/BrenoFariasdaSilva/Authy-iOS-MiTM)](https://github.com/BrenoFariasdaSilva/Authy-iOS-MiTM/issues)
+[![GitHub Pull Requests](https://img.shields.io/github/issues-pr/BrenoFariasdaSilva/Authy-iOS-MiTM)](https://github.com/BrenoFariasdaSilva/Authy-iOS-MiTM/pulls)
+![GitHub Last Commit](https://img.shields.io/github/last-commit/BrenoFariasdaSilva/Authy-iOS-MiTM)
+![GitHub License](https://img.shields.io/github/license/BrenoFariasdaSilva/Authy-iOS-MiTM)
+![Python](https://img.shields.io/badge/language-Python-3776AB)
+![Platforms](https://img.shields.io/badge/platforms-Windows%20%7C%20Linux%20%7C%20macOS-blue)
+[![WakaTime](https://wakatime.com/badge/user/28f6c354-43b3-4634-8ec1-631893fe27d0/project/2ebf4779-d642-42e8-b6ea-15c460d24085.svg)](https://wakatime.com/badge/user/28f6c354-43b3-4634-8ec1-631893fe27d0/project/2ebf4779-d642-42e8-b6ea-15c460d24085)
 
 </div>
+
 
 <div align="center">
 
@@ -69,7 +78,7 @@ It took a lot of work to make this fork, so I hope you enjoy it and find it usef
   - [Other info](#other-info)
   - [Contributing](#contributing)
   - [License](#license)
-    - [MIT License](#mit-license)
+    - [Apache License 2.0](#apache-license-20)
 
 ## Introduction
 
@@ -192,8 +201,8 @@ make --version
 1. Clone the repository with the following command:
 
    ```bash
-   git clone https://github.com/BrenoFariasdaSilva/Authy-iOS-MiTM.git
-   cd DDoS-Detector
+   git clone https://github.com/BrenoFariasDaSilva/Authy-iOS-MiTM.git
+   cd Authy-iOS-MiTM
    ```
 
 ### 4. Virtual environment (Strongly Recommended)
@@ -496,6 +505,6 @@ The guide for contributing is in the [CONTRIBUTING.md](CONTRIBUTING.md) file. If
 
 ## License
 
-### MIT License
+### Apache License 2.0
 
-This project is licensed under the [MIT License](LICENSE).
+This project is licensed under the [Apache License 2.0](LICENSE). This license permits use, modification, distribution, and sublicense of the code for both private and commercial purposes, provided that the original copyright notice and a disclaimer of warranty are included in all copies or substantial portions of the software. It also requires a clear attribution back to the original author(s) of the repository. For more details, see the [LICENSE](LICENSE) file in this repository.
