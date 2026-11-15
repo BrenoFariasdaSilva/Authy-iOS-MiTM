@@ -37,9 +37,33 @@ Features simplified setup, virtual environment support, improved code structure,
 
 <div align="center">
 
-![RepoBeats Statistics](https://repobeats.axiom.co/api/embed/acb10c4d8be1329bb6b375f5170d258cc275e940.svg "Repobeats analytics image")
+![GitHub Code Size in Bytes](https://img.shields.io/github/languages/code-size/BrenoFariasdaSilva/Authy-iOS-MiTM)
+[![GitHub Stars](https://img.shields.io/github/stars/BrenoFariasdaSilva/Authy-iOS-MiTM)](https://github.com/BrenoFariasdaSilva/Authy-iOS-MiTM/stargazers)
+[![GitHub Forks](https://img.shields.io/github/forks/BrenoFariasdaSilva/Authy-iOS-MiTM)](https://github.com/BrenoFariasdaSilva/Authy-iOS-MiTM/network/members)
+[![GitHub Contributors](https://img.shields.io/github/contributors/BrenoFariasdaSilva/Authy-iOS-MiTM)](https://github.com/BrenoFariasdaSilva/Authy-iOS-MiTM/graphs/contributors)
+![GitHub Last Commit](https://img.shields.io/github/last-commit/BrenoFariasdaSilva/Authy-iOS-MiTM)
+![GitHub License](https://img.shields.io/github/license/BrenoFariasdaSilva/Authy-iOS-MiTM)
+[![GitHub Issues](https://img.shields.io/github/issues/BrenoFariasdaSilva/Authy-iOS-MiTM)](https://github.com/BrenoFariasdaSilva/Authy-iOS-MiTM/issues)
+[![GitHub Pull Requests](https://img.shields.io/github/issues-pr/BrenoFariasdaSilva/Authy-iOS-MiTM)](https://github.com/BrenoFariasdaSilva/Authy-iOS-MiTM/pulls)
+[![Merged PRs](https://img.shields.io/github/issues-search/BrenoFariasdaSilva/Authy-iOS-MiTM?query=is%3Apr%20is%3Amerged&label=merged%20PRs&color=blue)](https://github.com/BrenoFariasdaSilva/Authy-iOS-MiTM/pulls?q=is%3Apr+is%3Amerged)
+![Python](https://img.shields.io/badge/language-Python-3776AB)
+![Platforms](https://img.shields.io/badge/platforms-Windows%20%7C%20Linux%20%7C%20macOS-blue)
+![wakatime](https://wakatime.com/badge/user/28f6c354-43b3-4634-8ec1-631893fe27d0/project/2ebf4779-d642-42e8-b6ea-15c460d24085.svg)
+[![GitHub Commits](https://img.shields.io/github/commit-activity/t/BrenoFariasdaSilva/Authy-iOS-MiTM/main)](https://github.com/BrenoFariasdaSilva/Authy-iOS-MiTM/commits/main)
+![GitHub Language Count](https://img.shields.io/github/languages/count/BrenoFariasdaSilva/Authy-iOS-MiTM)
+[![GitHub Created At](https://img.shields.io/github/created-at/BrenoFariasdaSilva/Authy-iOS-MiTM)](https://github.com/BrenoFariasdaSilva/Authy-iOS-MiTM)
+[![GitHub Repository Size](https://img.shields.io/github/repo-size/BrenoFariasdaSilva/Authy-iOS-MiTM)](https://github.com/BrenoFariasdaSilva/Authy-iOS-MiTM)
+[![Closed Issues](https://img.shields.io/github/issues-closed/BrenoFariasdaSilva/Authy-iOS-MiTM)](https://github.com/BrenoFariasdaSilva/Authy-iOS-MiTM/issues?q=is%3Aissue+is%3Aclosed)
+[![Closed Pull Requests](https://img.shields.io/github/issues-pr-closed/BrenoFariasdaSilva/Authy-iOS-MiTM)](https://github.com/BrenoFariasdaSilva/Authy-iOS-MiTM/pulls?q=is%3Apr+is%3Aclosed)
+[![Monthly Commits](https://img.shields.io/github/commit-activity/m/BrenoFariasdaSilva/Authy-iOS-MiTM/main)](https://github.com/BrenoFariasdaSilva/Authy-iOS-MiTM/commits)
+![mitmproxy](https://img.shields.io/badge/mitmproxy-mitmproxy-3b687a)
+![TOTP](https://img.shields.io/badge/TOTP-TOTP-1b7c85)
+![Proton Export](https://img.shields.io/badge/Proton%20Export-Proton%20Authenticator-6d4aff)
+
+![Repobeats Statistics](https://repobeats.axiom.co/api/embed/acb10c4d8be1329bb6b375f5170d258cc275e940.svg)
 
 </div>
+
 
 ## Table of Contents
 - [Authy-iOS-MiTM. ](#authy-ios-mitm-)
