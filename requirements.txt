@@ -1,8 +1,9 @@
-cffi==1.17.1
+cffi==2.0.0
 colorama==0.4.6
-cryptography==45.0.5
-pillow==11.3.0
-pycparser==2.22
-python-dotenv==1.1.1
+cryptography==46.0.3
+django-qrcode==0.3
+pillow==12.0.0
+pycparser==2.23
+python-dotenv==1.2.1
 qrcode==8.2
 tqdm==4.67.1
