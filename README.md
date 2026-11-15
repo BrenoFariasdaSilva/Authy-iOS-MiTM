@@ -22,6 +22,10 @@ It took a lot of work to make this fork, so I hope you enjoy it and find it usef
 
 <div align="center">
 
+
+
+[![GitHub Stars](https://img.shields.io/github/stars/BrenoFariasdaSilva/Authy-iOS-MiTM)](https://github.com/BrenoFariasdaSilva/Authy-iOS-MiTM/stargazers)
+[![GitHub Forks](https://img.shields.io/github/forks/BrenoFariasdaSilva/Authy-iOS-MiTM)](https://github.com/BrenoFariasdaSilva/Authy-iOS-MiTM/network/members)
 ![GitHub Code Size in Bytes Badge](https://img.shields.io/github/languages/code-size/BrenoFariasdaSilva/Authy-iOS-MiTM)
 ![GitHub Last Commit Badge](https://img.shields.io/github/last-commit/BrenoFariasdaSilva/Authy-iOS-MiTM)
 ![GitHub License Badge](https://img.shields.io/github/license/BrenoFariasdaSilva/Authy-iOS-MiTM)
