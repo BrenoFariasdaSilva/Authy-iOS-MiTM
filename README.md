@@ -29,6 +29,7 @@ It took a lot of work to make this fork, so I hope you enjoy it and find it usef
 [![GitHub Contributors](https://img.shields.io/github/contributors/BrenoFariasdaSilva/Authy-iOS-MiTM)](https://github.com/BrenoFariasdaSilva/Authy-iOS-MiTM/graphs/contributors)
 [![GitHub Issues](https://img.shields.io/github/issues/BrenoFariasdaSilva/Authy-iOS-MiTM)](https://github.com/BrenoFariasdaSilva/Authy-iOS-MiTM/issues)
 [![GitHub Pull Requests](https://img.shields.io/github/issues-pr/BrenoFariasdaSilva/Authy-iOS-MiTM)](https://github.com/BrenoFariasdaSilva/Authy-iOS-MiTM/pulls)
+[![Merged PRs](https://img.shields.io/github/issues-search/BrenoFariasdaSilva/Authy-iOS-MiTM?query=is%3Apr%20is%3Amerged&label=merged%20PRs&color=blue)](https://github.com/BrenoFariasdaSilva/Authy-iOS-MiTM/pulls?q=is%3Apr+is%3Amerged)
 ![GitHub Last Commit](https://img.shields.io/github/last-commit/BrenoFariasdaSilva/Authy-iOS-MiTM)
 ![GitHub License](https://img.shields.io/github/license/BrenoFariasdaSilva/Authy-iOS-MiTM)
 ![Python](https://img.shields.io/badge/language-Python-3776AB)
