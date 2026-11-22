@@ -12,6 +12,8 @@ A streamlined, automated, and well-documented fork of [AlexTech01's original pro
 
 Features simplified setup, virtual environment support, improved code structure, fixed QR code generation, automated TOTP URI and QR code exports, and **Proton Authenticator compatibility**, with a unified entry point for easier execution.
 
+**Using Authy on an older Android device?** See [Authy-MTK-Migrator](https://github.com/BrenoFariasdaSilva/Authy-MTK-Migrator), a separate offline recovery toolkit for certain compatible legacy MediaTek devices with accessible BROM/preloader and unencrypted ext2/3/4 `userdata`. Unlike the mitmproxy workflow above, its MTKClient method may recover tokens without root. It is not compatible with every Android device and cannot bypass device encryption.
+
 ---
 
 </div>
